@@ -1,0 +1,34 @@
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  IsNotEmpty,
+  IsObject,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+class CreateTwitterDto {
+  @IsOptional()
+  @IsString()
+  token?: string;
+
+  @IsOptional()
+  @IsString()
+  refresh_token?: string;
+}
+
+export class CreateUserDto {
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => CreateTwitterDto)
+  twitter?: CreateTwitterDto;
+}

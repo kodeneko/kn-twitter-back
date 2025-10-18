@@ -19,7 +19,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "mongo": "docker-compose up --detach",
-    "mongo:down": "docker-compose down -v"
+    "mongo:down": "docker-compose down -v",
+    "redis": "docker run --name redis -p 6379:6379 -d redis",
+    "redis:stop": "docker stop redis"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -30,7 +32,13 @@
     "axios": "^1.12.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
+    "crypto": "^1.0.1",
+    "hbs": "^4.2.0",
+    "ioredis": "^5.8.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.20.0",
     "mongoose": "^8.19.1",
+    "qs": "^6.14.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
