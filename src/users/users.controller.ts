@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseFilters,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -25,8 +26,11 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll({});
+  findAll(@Query('limit') limit?: number, @Query('skip') skip?: number) {
+    return this.userService.findAll({
+      limit: limit ? Number(limit) : 10,
+      skip: skip ? Number(skip) : 0,
+    });
   }
 
   @Get(':id')

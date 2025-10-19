@@ -16,13 +16,44 @@ import {
   generateCodeChallenge,
   generateCodeVerifier,
 } from 'src/utils/pkce.utils';
+import type { AxiosError, AxiosResponse } from 'axios';
 import qs from 'qs';
+
+interface TwitterTokenResponse {
+  token_type: string;
+  expires_in: number;
+  access_token: string;
+  scope: string;
+  refresh_token?: string; // si solicitaste offline.access
+}
 
 const redis = new Redis();
 
 @Controller('auth')
 export class AuthController {
-  constructor(private configService: ConfigService) {}
+  private readonly clientId: string;
+  private readonly clientSecret: string;
+  private readonly urlAuth: string;
+  private readonly urlToken: string;
+  private readonly urlCallback: string;
+
+  constructor(private configService: ConfigService) {
+    this.clientId = configService.get<string>('TWITTER_CLIENT_ID', {
+      infer: true,
+    }) as string;
+    this.clientSecret = configService.get<string>('TWITTER_CLIENT_SECRET', {
+      infer: true,
+    }) as string;
+    this.urlAuth = configService.get<string>('TWITTER_URL_AUTH', {
+      infer: true,
+    }) as string;
+    this.urlToken = configService.get<string>('TWITTER_URL_TOKEN', {
+      infer: true,
+    }) as string;
+    this.urlCallback = configService.get<string>('TWITTER_URL_CALLBACK', {
+      infer: true,
+    }) as string;
+  }
 
   @Get('login')
   @Render('login.hbs')
@@ -35,55 +66,46 @@ export class AuthController {
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
     const ticket = createTicket();
-
     await redis.setex(`twitterpkce:${ticket}`, 600, codeVerifier);
 
     const params = new URLSearchParams({
       response_type: 'code',
-      client_id: this.configService.get<string>('CLIENT_ID') as string,
-      redirect_uri: this.configService.get<string>(
-        'REDIRECT_CALLBACK',
-      ) as string,
+      client_id: this.clientId,
+      redirect_uri: this.urlCallback,
       scope: 'tweet.read users.read offline.access',
       state: ticket,
       code_challenge: codeChallenge,
       code_challenge_method: 'S256',
     });
-
-    res.redirect(`https://twitter.com/i/oauth2/authorize?${params.toString()}`);
+    const url = new URL(this.urlAuth);
+    url.search = params.toString();
+    res.redirect(url.toString());
   }
 
   @Get('callback')
   @Render('success.hbs')
   async callback(@Query() query: Record<string, string>, @Res() res: Response) {
     const { state: ticket, code } = query;
-    if (!ticket) throw new BadRequestException('turururu ticket');
+    if (!ticket) throw new BadRequestException('There is no state');
 
     const codeVerifier = await redis.get(`twitterpkce:${ticket}`);
-    if (!codeVerifier) throw new BadRequestException('turururu codeVerifier');
+    if (!codeVerifier)
+      throw new BadRequestException('There is no code verifier');
 
-    const clientId = this.configService.get<string>('CLIENT_ID') as string;
-    const clientSecret = this.configService.get<string>(
-      'CLIENT_SECRET',
-    ) as string;
-    let response;
-    const basicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString(
-      'base64',
-    );
-
-    const redirectUrl = this.configService.get<string>(
-      'REDIRECT_CALLBACK',
-    ) as string;
+    let response: TwitterTokenResponse | string;
+    const basicAuth = Buffer.from(
+      `${this.clientId}:${this.clientSecret}`,
+    ).toString('base64');
     try {
       const data = qs.stringify({
-        client_id: clientId,
+        client_id: this.clientId,
         grant_type: 'authorization_code',
         code,
-        redirect_uri: redirectUrl,
+        redirect_uri: this.urlCallback,
         code_verifier: codeVerifier,
       });
-      response = await axios.post(
-        'https://api.twitter.com/2/oauth2/token',
+      const result: AxiosResponse<TwitterTokenResponse> = await axios.post(
+        this.urlToken,
         data,
         {
           headers: {
@@ -92,13 +114,20 @@ export class AuthController {
           },
         },
       );
+      response = result.data;
     } catch (err) {
-      console.log('error-data', err.response?.data);
-      response = err.response?.data;
+      const axiosError = err as AxiosError;
+      response = axiosError.response?.data
+        ? JSON.stringify(axiosError.response.data)
+        : axiosError.message;
     }
 
     await redis.del(`twitterpkce:${ticket}`);
-    console.log('los tokens', response.data);
-    return { response: JSON.stringify(response.message) };
+    return {
+      response:
+        typeof response === 'string'
+          ? response
+          : JSON.stringify(response, null, 2),
+    };
   }
 }
