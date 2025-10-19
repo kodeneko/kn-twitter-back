@@ -83,7 +83,7 @@ export class AuthController {
   }
 
   @Get('callback')
-  @Render('success.hbs')
+  @Render('log.hbs')
   async callback(@Query() query: Record<string, string>, @Res() res: Response) {
     const { state: ticket, code } = query;
     if (!ticket) throw new BadRequestException('There is no state');
