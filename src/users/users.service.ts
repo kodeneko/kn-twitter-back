@@ -9,9 +9,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createUserDTO: CreateUserDto): Promise<User> {
+  async create(createUserDTO: CreateUserDto): Promise<UserDocument> {
     const user = new this.userModel(createUserDTO);
-    return user.save();
+    const savedUser = await user.save();
+    return savedUser;
   }
 
   async findAll({
@@ -20,20 +21,20 @@ export class UsersService {
   }: {
     skip?: number;
     limit?: number;
-  }): Promise<User[]> {
+  }): Promise<UserDocument[]> {
     return this.userModel.find().skip(skip).limit(limit).exec();
   }
 
-  async findOne(id: string): Promise<User | null> {
+  async findOne(id: string): Promise<UserDocument | null> {
     return this.userModel.findById(id).exec();
   }
 
-  async update(updateUserDto: UpdateUserDto): Promise<User | null> {
+  async update(updateUserDto: UpdateUserDto): Promise<UserDocument | null> {
     const { _id, ...rest } = updateUserDto;
     return this.userModel.findByIdAndUpdate(_id, rest, { new: true }).exec();
   }
 
-  async delete(id: string): Promise<User | null> {
+  async delete(id: string): Promise<UserDocument | null> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
 }
