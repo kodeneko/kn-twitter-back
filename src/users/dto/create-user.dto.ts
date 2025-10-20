@@ -11,11 +11,15 @@ import { Type } from 'class-transformer';
 class CreateTwitterDto {
   @IsOptional()
   @IsString()
+  id?: string;
+
+  @IsOptional()
+  @IsString()
   token?: string;
 
   @IsOptional()
   @IsString()
-  refresh_token?: string;
+  refreshToken?: string;
 }
 
 export class CreateUserDto {
@@ -24,7 +28,8 @@ export class CreateUserDto {
   username: string;
 
   @IsEmail()
-  email: string;
+  @IsOptional()
+  email?: string;
 
   @IsOptional()
   @IsObject()
