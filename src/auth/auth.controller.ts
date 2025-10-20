@@ -18,6 +18,7 @@ import {
 } from 'src/utils/pkce.utils';
 import type { AxiosError, AxiosResponse } from 'axios';
 import qs from 'qs';
+import { UsersService } from 'src/users/users.service';
 
 interface TwitterTokenResponse {
   token_type: string;
@@ -37,7 +38,10 @@ export class AuthController {
   private readonly urlToken: string;
   private readonly urlCallback: string;
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private readonly userService: UsersService,
+  ) {
     this.clientId = configService.get<string>('TWITTER_CLIENT_ID', {
       infer: true,
     }) as string;
