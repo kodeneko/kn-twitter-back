@@ -21,10 +21,17 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { TwitterService } from './twitter.service';
 import { TwErrorServerFilter } from './filters/tw-error-server.filter';
 import { TwErrorRequestFilter } from './filters/tw-error-request.filter';
+import { DbErrorServerFilter } from 'src/common/filters/db-error-server.filter';
+import { DbErrorRequestFilter } from 'src/common/filters/db-error-request.filter';
 
 const redis = new Redis();
 
-@UseFilters(TwErrorRequestFilter, TwErrorServerFilter)
+@UseFilters(
+  TwErrorRequestFilter,
+  TwErrorServerFilter,
+  DbErrorServerFilter,
+  DbErrorRequestFilter,
+)
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -63,14 +70,10 @@ export class AuthController {
     if (!codeVerifier)
       throw new BadRequestException('There is no code verifier');
 
-    try {
-      const { accesToken, refreshToken } =
-        await this.twitterService.extractTokens(code, codeVerifier);
-      await this.twitterService.createUserIfNotExists(accesToken, refreshToken);
-      await redis.del(`twitterpkce:${ticket}`);
-    } catch (err) {
-      throw Error(err);
-    }
+    const { accesToken, refreshToken } =
+      await this.twitterService.extractTokens(code, codeVerifier);
+    await this.twitterService.createUserIfNotExists(accesToken, refreshToken);
+    await redis.del(`twitterpkce:${ticket}`);
 
     res.redirect('/');
   }

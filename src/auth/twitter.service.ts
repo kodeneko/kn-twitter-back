@@ -1,11 +1,13 @@
+import { TwErrorServerException } from './exceptions/tw-error-server.exception';
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import qs from 'qs';
 import { TwitterTokenResponse } from './models/twitter-token-response.model';
 import { ConfigService } from '@nestjs/config';
-import type { AxiosResponse } from 'axios';
+import type { AxiosError, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { TwitterMeResponse } from './models/twitter-me-response.mdoel';
+import { TwErrorRequestException } from './exceptions/tw-error-request.exception';
 
 @Injectable()
 export class TwitterService {
@@ -70,16 +72,24 @@ export class TwitterService {
       redirect_uri: this.urlCallback,
       code_verifier: codeVerifier,
     });
-    const userTokensResult: AxiosResponse<TwitterTokenResponse> =
-      await axios.post(this.urlToken, data, {
+    let userTokensResult: AxiosResponse<TwitterTokenResponse>;
+    let accesToken: string;
+    let refreshToken: string;
+    try {
+      userTokensResult = await axios.post(this.urlToken, data, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Basic ${basicAuth}`,
         },
       });
-    const accesToken = userTokensResult.data.access_token;
-    const refreshToken = userTokensResult.data.refresh_token as string;
-
+      accesToken = userTokensResult.data.access_token;
+      refreshToken = userTokensResult.data.refresh_token as string;
+    } catch (err) {
+      const axiosErr = err as AxiosError;
+      throw !axiosErr.response || axiosErr.response.status > 500
+        ? new TwErrorServerException()
+        : new TwErrorRequestException();
+    }
     return { accesToken, refreshToken };
   }
 
@@ -94,23 +104,24 @@ export class TwitterService {
         { headers: { Authorization: `Bearer ${accesToken}` } },
       );
       userInfo = userInfoResult.data;
-
-      const user = await this.userService.find({
-        ['twitter.id']: userInfo.data.id,
+    } catch (err) {
+      const axiosErr = err as AxiosError;
+      throw !axiosErr.response || axiosErr.response.status > 500
+        ? new TwErrorServerException()
+        : new TwErrorRequestException();
+    }
+    const user = await this.userService.find({
+      ['twitter.id']: userInfo.data.id,
+    });
+    if (user?.length === 0) {
+      await this.userService.create({
+        username: userInfo.data.username,
+        twitter: {
+          id: userInfo.data.id,
+          token: accesToken,
+          refreshToken: refreshToken,
+        },
       });
-      if (user?.length === 0) {
-        // Creamos usuario
-        await this.userService.create({
-          username: userInfo.data.username,
-          twitter: {
-            id: userInfo.data.id,
-            token: accesToken,
-            refreshToken: refreshToken,
-          },
-        });
-      }
-    } catch {
-      throw Error();
     }
   }
 }
