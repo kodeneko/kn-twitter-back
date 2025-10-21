@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { AuthService } from './jwt.service';
+import { JwtAuthService } from './jwt-auth.service';
 import {
   CanActivate,
   ExecutionContext,
@@ -15,7 +15,7 @@ import { IS_PUBLIC_KEY } from 'src/common/decorators/public.decorator';
 @Injectable()
 export class JwtGuard implements CanActivate {
   constructor(
-    private authService: AuthService,
+    private jwtAuthService: JwtAuthService,
     private reflector: Reflector,
   ) {}
 
@@ -44,7 +44,7 @@ export class JwtGuard implements CanActivate {
 
     // Check token
     try {
-      this.authService.checkTokenJWT(token as string);
+      this.jwtAuthService.checkTokenJWT(token as string);
     } catch {
       throw new UnauthorizedException('Token inválido o expirado');
     }

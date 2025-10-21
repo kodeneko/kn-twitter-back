@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UserDocument } from 'src/users/schemas/user.schema';
@@ -8,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt';
 
 @Injectable()
-export class AuthService {
+export class JwtAuthService {
   private readonly tokenSecret: string;
   private readonly tokenEmiter: string;
   private readonly tokenReciever: string;
@@ -46,7 +43,7 @@ export class AuthService {
 
     const accesToken: string = this.jwtService.sign(payload, {
       secret: this.tokenSecret,
-    }) as string;
+    });
     return accesToken;
   }
 
@@ -55,7 +52,7 @@ export class AuthService {
     try {
       payload = this.jwtService.verify(token, {
         secret: this.tokenSecret,
-      } as JwtVerifyOptions) as Record<string, string | number>;
+      } as JwtVerifyOptions);
     } catch {
       throw new UnauthorizedException('Token inválido o expirado');
     }

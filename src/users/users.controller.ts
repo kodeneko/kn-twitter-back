@@ -11,11 +11,12 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { DbErrorFilter } from '../common/filters/db-error-filter.filter';
 import { ParseObjectIdPipe } from 'src/common/pipes/parse-object-id.pipe';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { DbErrorServerFilter } from 'src/common/filters/db-error-server.filter';
+import { DbErrorRequestFilter } from 'src/common/filters/db-error-request.filter';
 
-@UseFilters(DbErrorFilter)
+@UseFilters(DbErrorServerFilter, DbErrorRequestFilter)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
