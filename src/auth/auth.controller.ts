@@ -35,12 +35,16 @@ const redis = new Redis();
 )
 @Controller('auth')
 export class AuthController {
+  private mode;
+
   constructor(
-    private configService: ConfigService,
+    private readonly configService: ConfigService,
     private readonly userService: UsersService,
     private readonly twitterService: TwitterService,
     private readonly jwtAuthService: JwtAuthService,
-  ) {}
+  ) {
+    this.mode = this.configService.get<string>('MODE') as string;
+  }
 
   @Public()
   @Get('login')
@@ -85,14 +89,14 @@ export class AuthController {
 
     // Create JWT token
     const tokenJwt = this.jwtAuthService.createTokenJWT(user);
-    // const isProd = this.configService.get<string>('NODE_ENV') === 'production';
-    const isProd = false;
+    const isProd = this.mode === 'prod';
     const cookieOptions = {
       httpOnly: true,
       secure: !!isProd,
       sameSite: isProd ? ('none' as const) : ('lax' as const),
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
+      signed: !!isProd,
     };
 
     res.cookie('jwt', tokenJwt, cookieOptions);
