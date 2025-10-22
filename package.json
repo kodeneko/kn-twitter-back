@@ -21,7 +21,8 @@
     "mongo": "docker-compose up --detach",
     "mongo:down": "docker-compose down -v",
     "redis": "docker run --name redis -p 6379:6379 -d redis",
-    "redis:stop": "docker stop redis"
+    "redis:stop": "docker stop redis",
+    "key": "openssl rand -hex 64"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -30,9 +31,11 @@
     "@nestjs/jwt": "^11.0.1",
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
+    "@types/cookie-parser": "^1.4.9",
     "axios": "^1.12.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
+    "cookie-parser": "^1.4.7",
     "crypto": "^1.0.1",
     "hbs": "^4.2.0",
     "ioredis": "^5.8.1",
