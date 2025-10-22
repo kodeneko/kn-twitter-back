@@ -8,6 +8,9 @@ import {
   Put,
   Query,
   UseFilters,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -22,12 +25,14 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createUserDto: CreateUserDto) {
+    const created = await this.userService.create(createUserDto);
+    return created;
   }
 
   @Get()
-  findAll(@Query('limit') limit?: number, @Query('skip') skip?: number) {
+  async findAll(@Query('limit') limit?: number, @Query('skip') skip?: number) {
     return this.userService.findAll({
       limit: limit ? Number(limit) : 10,
       skip: skip ? Number(skip) : 0,
@@ -35,17 +40,30 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseObjectIdPipe) id: string) {
-    return this.userService.findOne(id);
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
+    const user = await this.userService.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`User ${id} not found`);
+    }
+    return user;
   }
 
   @Put()
-  put(@Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(updateUserDto);
+  async put(@Body() updateUserDto: UpdateUserDto) {
+    const updated = await this.userService.update(updateUserDto);
+    if (!updated) {
+      throw new NotFoundException(`User ${updateUserDto._id} not found`);
+    }
+    return updated;
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseObjectIdPipe) id: string) {
-    return this.userService.delete(id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id', ParseObjectIdPipe) id: string) {
+    const deleted = await this.userService.delete(id);
+    if (!deleted) {
+      throw new NotFoundException(`User ${id} not found`);
+    }
+    return;
   }
 }
