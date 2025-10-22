@@ -4,24 +4,25 @@ import { TwErrorLimitsException } from 'src/auth/exceptions/tw-error-limits.exce
 import { TwErrorRequestException } from 'src/auth/exceptions/tw-error-request.exception';
 import { TwErrorServerException } from 'src/auth/exceptions/tw-error-server.exception';
 import { TwitterCountsResponse } from 'src/auth/models/twitter-count-response.model';
+import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.model';
 
 @Injectable()
 export class PostsService {
-  async countPosts(
+  async postCall(
+    url: string,
     query: string,
     date: string,
-  ): Promise<TwitterCountsResponse> {
-    let res: TwitterCountsResponse;
+  ): Promise<TwitterCountsResponse | TwitterSearchResponse> {
+    let res: TwitterCountsResponse | TwitterSearchResponse;
     try {
-      const axiosRes = await axios.post<TwitterCountsResponse>(
-        'https://api.x.com/2/tweets/counts/recent',
-        {
-          params: {
-            query,
-            ['end_time']: date,
-          },
+      const axiosRes = await axios.post<
+        TwitterCountsResponse | TwitterSearchResponse
+      >(url, {
+        params: {
+          query,
+          ['end_time']: date,
         },
-      );
+      });
       res = axiosRes.data;
     } catch (err) {
       const axiosErr = err as AxiosError;
@@ -31,5 +32,24 @@ export class PostsService {
       else throw new TwErrorRequestException();
     }
     return res;
+  }
+
+  async countPosts(
+    query: string,
+    date: string,
+  ): Promise<TwitterCountsResponse> {
+    return (await this.postCall(
+      'https://api.x.com/2/tweets/counts/recent',
+      query,
+      date,
+    )) as TwitterCountsResponse;
+  }
+
+  async posts(query: string, date: string): Promise<TwitterSearchResponse> {
+    return (await this.postCall(
+      'https://api.x.com/2/tweets/search/recent',
+      query,
+      date,
+    )) as TwitterSearchResponse;
   }
 }
