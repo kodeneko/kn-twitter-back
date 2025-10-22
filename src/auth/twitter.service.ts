@@ -8,6 +8,7 @@ import type { AxiosError, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { TwitterMeResponse } from './models/twitter-me-response.mdoel';
 import { TwErrorRequestException } from './exceptions/tw-error-request.exception';
+import { UserDocument } from 'src/users/schemas/user.schema';
 
 @Injectable()
 export class TwitterService {
@@ -93,10 +94,10 @@ export class TwitterService {
     return { accesToken, refreshToken };
   }
 
-  async createUserIfNotExists(
+  async getOrCreateUser(
     accesToken: string,
     refreshToken: string,
-  ): Promise<void> {
+  ): Promise<UserDocument> {
     let userInfo: TwitterMeResponse | undefined = undefined;
     try {
       const userInfoResult: AxiosResponse<TwitterMeResponse> = await axios.get(
@@ -110,11 +111,13 @@ export class TwitterService {
         ? new TwErrorServerException()
         : new TwErrorRequestException();
     }
-    const user = await this.userService.find({
+    let user: UserDocument;
+    const resFindUser = await this.userService.find({
       ['twitter.id']: userInfo.data.id,
     });
-    if (user?.length === 0) {
-      await this.userService.create({
+
+    if (resFindUser?.length === 0) {
+      user = await this.userService.create({
         username: userInfo.data.username,
         twitter: {
           id: userInfo.data.id,
@@ -122,6 +125,8 @@ export class TwitterService {
           refreshToken: refreshToken,
         },
       });
-    }
+    } else user = resFindUser?.pop() as UserDocument;
+
+    return user;
   }
 }
