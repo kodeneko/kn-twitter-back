@@ -7,13 +7,21 @@ import { DaysRangePipe } from './pipes/days-range.pipe';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { Cookie } from 'src/common/decorators/cookie.decorator';
 import { JwtAuthService } from 'src/auth/jwt-auth.service';
-import { JwtTokenPayload } from 'src/auth/models/jwt-token-payload.model';
 import { UsersService } from 'src/users/users.service';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import type { UserDocument } from 'src/users/schemas/user.schema';
 import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
 import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
+import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
+import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
+import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
 
-@UseFilters(TwErrorRequestFilter, TwErrorServerFilter)
+@UseFilters(
+  TwErrorRequestFilter,
+  TwErrorServerFilter,
+  DbErrorServerFilter,
+  DbErrorRequestFilter,
+  DbErrorRequestFilter,
+)
 @Controller('posts')
 export class PostsController {
   constructor(
@@ -35,10 +43,8 @@ export class PostsController {
   @Get('posts')
   async postsOneDay(
     @Query('days', DaysRangePipe) days: number,
-    @Cookie('jwt') jwt: string,
+    @Cookie('user', UserFromTokenPipe) user: UserDocument,
   ): Promise<TwitterSearchResponse> {
-    const jwtPayload: JwtTokenPayload = this.jwtAuthService.checkTokenJWT(jwt);
-    const user: UserDocument = await this.usersService.findOne(jwtPayload.sub);
     const date = getDateBeforeISO(days, 'days');
     return this.postsService.posts(date, user.twitter.id);
   }
