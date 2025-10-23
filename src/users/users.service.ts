@@ -8,7 +8,6 @@ import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filte
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
 import { DbNotFound } from 'src/common/exceptions/db/db-not-found.exception';
 
-@UseFilters(DbErrorServerFilter, DbErrorRequestFilter)
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}

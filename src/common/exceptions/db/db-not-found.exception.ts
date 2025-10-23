@@ -1,4 +1,4 @@
-export class DbNotFound extends Error {
+export class DbNotFoundException extends Error {
   public readonly name = 'DbNotFound';
   public readonly details?: unknown;
 
@@ -7,7 +7,7 @@ export class DbNotFound extends Error {
     this.details = details;
 
     if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, DbNotFound);
+      Error.captureStackTrace(this, DbNotFoundException);
     }
   }
 }

@@ -19,7 +19,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
 
-@UseFilters(DbErrorServerFilter, DbErrorRequestFilter)
+@UseFilters(DbErrorServerFilter, DbErrorRequestFilter, DbErrorRequestFilter)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
