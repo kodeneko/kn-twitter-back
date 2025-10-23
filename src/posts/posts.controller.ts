@@ -1,57 +1,45 @@
-import { Controller, Get, Query, UseFilters } from '@nestjs/common';
+import { Controller, Get, Query, UseFilters, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { TwErrorRequestFilter } from 'src/auth/filters/tw-error-request.filter';
-import { TwErrorServerFilter } from 'src/auth/filters/tw-error-server.filter';
-import {
-  dateDayBefore,
-  dateThreeDaysBefore,
-  dateWeekBefore,
-} from 'src/utils/time-count.utils';
+import { getDateBeforeISO } from 'src/utils/time-count.utils';
 import { TwitterCountsResponse } from 'src/auth/models/twitter-count-response.model';
 import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.model';
+import { DaysRangePipe } from './pipes/days-range.pipe';
+import { JwtGuard } from 'src/auth/jwt.guard';
+import { Cookie } from 'src/common/decorators/cookie.decorator';
+import { JwtAuthService } from 'src/auth/jwt-auth.service';
+import { JwtTokenPayload } from 'src/auth/models/jwt-token-payload.model';
+import { UsersService } from 'src/users/users.service';
+import { UserDocument } from 'src/users/schemas/user.schema';
+import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
+import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
 
 @UseFilters(TwErrorRequestFilter, TwErrorServerFilter)
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly jwtAuthService: JwtAuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
-  @Get('count/three-days')
+  @Get('count')
   countThreeDays(
     @Query('query') query: string,
+    @Query('days', DaysRangePipe) days: number,
   ): Promise<TwitterCountsResponse> {
-    const date = dateThreeDaysBefore();
+    const date = getDateBeforeISO(days, 'days');
     return this.postsService.countPosts(query, date);
   }
 
-  @Get('count/one-day')
-  countOneDay(@Query('query') query: string): Promise<TwitterCountsResponse> {
-    const date = dateDayBefore();
-    return this.postsService.countPosts(query, date);
-  }
-
-  @Get('count/one-week')
-  countOneWeeky(@Query('query') query: string): Promise<TwitterCountsResponse> {
-    const date = dateWeekBefore();
-    return this.postsService.countPosts(query, date);
-  }
-
-  @Get('count/three-days')
-  postsThreeDays(
-    @Query('query') query: string,
+  @UseGuards(JwtGuard)
+  @Get('posts')
+  async postsOneDay(
+    @Query('days', DaysRangePipe) days: number,
+    @Cookie('jwt') jwt: string,
   ): Promise<TwitterSearchResponse> {
-    const date = dateThreeDaysBefore();
-    return this.postsService.posts(query, date);
-  }
-
-  @Get('count/one-day')
-  postsOneDay(@Query('query') query: string): Promise<TwitterSearchResponse> {
-    const date = dateDayBefore();
-    return this.postsService.posts(query, date);
-  }
-
-  @Get('count/one-week')
-  postsOneWeeky(@Query('query') query: string): Promise<TwitterSearchResponse> {
-    const date = dateWeekBefore();
-    return this.postsService.posts(query, date);
+    const jwtPayload: JwtTokenPayload = this.jwtAuthService.checkTokenJWT(jwt);
+    const user: UserDocument = await this.usersService.findOne(jwtPayload.sub);
+    const date = getDateBeforeISO(days, 'days');
+    return this.postsService.posts(date, user.twitter.id);
   }
 }

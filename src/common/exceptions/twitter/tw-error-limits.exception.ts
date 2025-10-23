@@ -1,5 +1,5 @@
 export class TwErrorLimitsException extends Error {
-  public readonly name = 'TwErrorServerException';
+  public readonly name = 'TwErrorLimitsException';
   public readonly details?: unknown;
 
   constructor(message?: string, details?: unknown) {

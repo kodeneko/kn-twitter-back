@@ -19,11 +19,11 @@ import {
 import { UsersService } from 'src/users/users.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { TwitterService } from './twitter.service';
-import { TwErrorServerFilter } from './filters/tw-error-server.filter';
-import { TwErrorRequestFilter } from './filters/tw-error-request.filter';
-import { DbErrorServerFilter } from 'src/common/filters/db-error-server.filter';
-import { DbErrorRequestFilter } from 'src/common/filters/db-error-request.filter';
 import { JwtAuthService } from './jwt-auth.service';
+import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
+import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
+import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
+import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
 
 const redis = new Redis();
 

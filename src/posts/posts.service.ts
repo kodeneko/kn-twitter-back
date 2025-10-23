@@ -1,28 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { TwErrorLimitsException } from 'src/auth/exceptions/tw-error-limits.exception';
-import { TwErrorRequestException } from 'src/auth/exceptions/tw-error-request.exception';
-import { TwErrorServerException } from 'src/auth/exceptions/tw-error-server.exception';
 import { TwitterCountsResponse } from 'src/auth/models/twitter-count-response.model';
 import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.model';
+import { TwErrorLimitsException } from 'src/common/exceptions/twitter/tw-error-limits.exception';
+import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
+import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
 
 @Injectable()
 export class PostsService {
   async postCall(
     url: string,
-    query: string,
-    date: string,
+    opts: Record<string, any>,
   ): Promise<TwitterCountsResponse | TwitterSearchResponse> {
     let res: TwitterCountsResponse | TwitterSearchResponse;
     try {
       const axiosRes = await axios.post<
         TwitterCountsResponse | TwitterSearchResponse
-      >(url, {
-        params: {
-          query,
-          ['end_time']: date,
-        },
-      });
+      >(url, opts);
       res = axiosRes.data;
     } catch (err) {
       const axiosErr = err as AxiosError;
@@ -38,18 +32,19 @@ export class PostsService {
     query: string,
     date: string,
   ): Promise<TwitterCountsResponse> {
-    return (await this.postCall(
-      'https://api.x.com/2/tweets/counts/recent',
-      query,
-      date,
-    )) as TwitterCountsResponse;
+    return (await this.postCall('https://api.x.com/2/tweets/counts/recent', {
+      params: {
+        query,
+        ['end_time']: date,
+      },
+    })) as TwitterCountsResponse;
   }
 
-  async posts(query: string, date: string): Promise<TwitterSearchResponse> {
-    return (await this.postCall(
-      'https://api.x.com/2/tweets/search/recent',
-      query,
-      date,
-    )) as TwitterSearchResponse;
+  async posts(date: string, user: string): Promise<TwitterSearchResponse> {
+    return (await this.postCall(`https://api.x.com/2/users/${user}/tweets`, {
+      params: {
+        ['end_time']: date,
+      },
+    })) as TwitterSearchResponse;
   }
 }

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { v4 as uuidv4 } from 'uuid';
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt';
+import { JwtTokenPayload } from './models/jwt-token-payload.model';
 
 @Injectable()
 export class JwtAuthService {
@@ -26,7 +27,7 @@ export class JwtAuthService {
   }
 
   createTokenJWT(user: UserDocument): string {
-    const payload: Record<string, string | number> = {
+    const payload: JwtTokenPayload = {
       sub: user._id.toString(), // Subject = ID de usuario
       name: user.username, // claim personalizada
       email: user.email, // claim personalizada
@@ -47,8 +48,8 @@ export class JwtAuthService {
     return accesToken;
   }
 
-  checkTokenJWT(token: string): Record<string, string | number> {
-    let payload: Record<string, string | number>;
+  checkTokenJWT(token: string): JwtTokenPayload {
+    let payload: JwtTokenPayload;
     try {
       payload = this.jwtService.verify(token, {
         secret: this.tokenSecret,

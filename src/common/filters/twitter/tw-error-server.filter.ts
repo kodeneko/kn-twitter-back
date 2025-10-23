@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { TwErrorServerException } from '../exceptions/tw-error-server.exception';
+import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
 
 @Catch(TwErrorServerException)
 export class TwErrorServerFilter implements ExceptionFilter {

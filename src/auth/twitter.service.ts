@@ -1,4 +1,3 @@
-import { TwErrorServerException } from './exceptions/tw-error-server.exception';
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import qs from 'qs';
@@ -7,8 +6,9 @@ import { ConfigService } from '@nestjs/config';
 import type { AxiosError, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { TwitterMeResponse } from './models/twitter-me-response.mdoel';
-import { TwErrorRequestException } from './exceptions/tw-error-request.exception';
 import { UserDocument } from 'src/users/schemas/user.schema';
+import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
+import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
 
 @Injectable()
 export class TwitterService {
