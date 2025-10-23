@@ -1,12 +1,10 @@
-import { Injectable, UseFilters } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User, UserDocument } from './schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
-import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
-import { DbNotFound } from 'src/common/exceptions/db/db-not-found.exception';
+import { DbNotFoundException } from 'src/common/exceptions/db/db-not-found.exception';
 
 @Injectable()
 export class UsersService {
@@ -33,7 +31,7 @@ export class UsersService {
       .findById(id)
       .exec()
       .then((doc) => {
-        if (doc === null) throw new DbNotFound();
+        if (doc === null) throw new DbNotFoundException();
         return doc;
       });
   }
@@ -43,7 +41,7 @@ export class UsersService {
       .find(opts)
       .exec()
       .then((list) => {
-        if (list.length === 0) throw new DbNotFound();
+        if (list.length === 0) throw new DbNotFoundException();
         return list;
       });
   }
@@ -54,7 +52,7 @@ export class UsersService {
       .findByIdAndUpdate(_id, rest, { new: true })
       .exec()
       .then((doc) => {
-        if (doc === null) throw new DbNotFound();
+        if (doc === null) throw new DbNotFoundException();
         return doc;
       });
   }
@@ -64,7 +62,7 @@ export class UsersService {
       .findByIdAndDelete(id)
       .exec()
       .then((doc) => {
-        if (doc === null) throw new DbNotFound();
+        if (doc === null) throw new DbNotFoundException();
         return doc;
       });
   }

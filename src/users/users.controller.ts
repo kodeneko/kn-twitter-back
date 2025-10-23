@@ -11,6 +11,7 @@ import {
   HttpCode,
   HttpStatus,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,8 +19,10 @@ import { ParseObjectIdPipe } from 'src/common/pipes/parse-object-id.pipe';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @UseFilters(DbErrorServerFilter, DbErrorRequestFilter, DbErrorRequestFilter)
+@UseGuards(JwtGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
