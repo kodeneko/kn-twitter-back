@@ -43,7 +43,7 @@ export class PostsController {
   @Get('posts')
   async postsOneDay(
     @Query('days', DaysRangePipe) days: number,
-    @Cookie('user', UserFromTokenPipe) user: UserDocument,
+    @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
   ): Promise<TwitterSearchResponse> {
     const date = getDateBeforeISO(days, 'days');
     return this.postsService.posts(date, user.twitter.id);
