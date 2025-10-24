@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "mongo": "docker-compose up --detach",
     "mongo:down": "docker-compose down -v",
+    "mongo:woeid": "mongoimport --type csv --headerline --db kn-twitty --collection woeid --file ./assets/woeid.csv",
     "redis": "docker run --name redis -p 6379:6379 -d redis",
     "redis:stop": "docker stop redis",
     "key": "openssl rand -hex 64"
