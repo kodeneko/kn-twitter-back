@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { DbNotFoundException } from 'src/common/exceptions/db/db-not-found.exception';
 
 @Injectable()
 export class UsersService {
@@ -25,16 +26,44 @@ export class UsersService {
     return this.userModel.find().skip(skip).limit(limit).exec();
   }
 
-  async findOne(id: string): Promise<UserDocument | null> {
-    return this.userModel.findById(id).exec();
+  async findOne(id: string): Promise<UserDocument> {
+    return this.userModel
+      .findById(id)
+      .exec()
+      .then((doc) => {
+        if (doc === null) throw new DbNotFoundException();
+        return doc;
+      });
   }
 
-  async update(updateUserDto: UpdateUserDto): Promise<UserDocument | null> {
+  async find(opts: Record<string, string>): Promise<UserDocument[]> {
+    return this.userModel
+      .find(opts)
+      .exec()
+      .then((list) => {
+        if (list.length === 0) throw new DbNotFoundException();
+        return list;
+      });
+  }
+
+  async update(updateUserDto: UpdateUserDto): Promise<UserDocument> {
     const { _id, ...rest } = updateUserDto;
-    return this.userModel.findByIdAndUpdate(_id, rest, { new: true }).exec();
+    return this.userModel
+      .findByIdAndUpdate(_id, rest, { new: true })
+      .exec()
+      .then((doc) => {
+        if (doc === null) throw new DbNotFoundException();
+        return doc;
+      });
   }
 
-  async delete(id: string): Promise<UserDocument | null> {
-    return this.userModel.findByIdAndDelete(id).exec();
+  async delete(id: string): Promise<UserDocument> {
+    return this.userModel
+      .findByIdAndDelete(id)
+      .exec()
+      .then((doc) => {
+        if (doc === null) throw new DbNotFoundException();
+        return doc;
+      });
   }
 }

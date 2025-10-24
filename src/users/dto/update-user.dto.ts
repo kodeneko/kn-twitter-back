@@ -12,11 +12,15 @@ import { Type } from 'class-transformer';
 class UpdateTwitterDto {
   @IsOptional()
   @IsString()
+  id?: string;
+
+  @IsOptional()
+  @IsString()
   token?: string;
 
   @IsOptional()
   @IsString()
-  refresh_token?: string;
+  refreshToken?: string;
 }
 
 class UpdateUserDto {

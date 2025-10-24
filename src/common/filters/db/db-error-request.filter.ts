@@ -1,10 +1,19 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { MongoServerError } from 'mongodb';
+import {
+  MongoBulkWriteError,
+  MongoCursorExhaustedError,
+  MongoError,
+  MongoInvalidArgumentError,
+} from 'mongodb';
 
-@Catch(MongoServerError)
-export class DbErrorFilter implements ExceptionFilter {
-  catch(exception: MongoServerError, host: ArgumentsHost) {
+@Catch(
+  MongoBulkWriteError,
+  MongoInvalidArgumentError,
+  MongoCursorExhaustedError,
+)
+export class DbErrorRequestFilter implements ExceptionFilter {
+  catch(exception: MongoError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
     const req = ctx.getRequest<Request>();

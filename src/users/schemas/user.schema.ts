@@ -4,10 +4,13 @@ import { Document, Types } from 'mongoose';
 @Schema({ _id: false })
 class TwitterInfo {
   @Prop()
+  id: string;
+
+  @Prop()
   token: string;
 
   @Prop()
-  refresh_token: string;
+  refreshToken: string;
 
   @Prop()
   expiration: number;
@@ -19,7 +22,8 @@ export class User {
   @Prop({ required: true, unique: true })
   username: string;
 
-  @Prop({ required: true, unique: true })
+  // @Prop({ required: true, unique: true })
+  @Prop()
   email: string;
 
   @Prop({ type: TwitterInfoSchema })

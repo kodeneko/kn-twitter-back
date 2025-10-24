@@ -8,43 +8,51 @@ import {
   Put,
   Query,
   UseFilters,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { DbErrorFilter } from '../common/filters/db-error-filter.filter';
 import { ParseObjectIdPipe } from 'src/common/pipes/parse-object-id.pipe';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
+import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
-@UseFilters(DbErrorFilter)
+@UseFilters(DbErrorServerFilter, DbErrorRequestFilter, DbErrorRequestFilter)
+@UseGuards(JwtGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createUserDto: CreateUserDto) {
+    const created = await this.userService.create(createUserDto);
+    return created;
   }
 
   @Get()
-  findAll(@Query('limit') limit?: number, @Query('skip') skip?: number) {
+  async findAll(@Query('limit') limit?: string, @Query('skip') skip?: string) {
     return this.userService.findAll({
-      limit: limit ? Number(limit) : 10,
-      skip: skip ? Number(skip) : 0,
+      limit: limit ? parseInt(limit, 10) : 10,
+      skip: skip ? parseInt(skip, 10) : 0,
     });
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseObjectIdPipe) id: string) {
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
     return this.userService.findOne(id);
   }
 
   @Put()
-  put(@Body() updateUserDto: UpdateUserDto) {
+  async put(@Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(updateUserDto);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseObjectIdPipe) id: string) {
+  async delete(@Param('id', ParseObjectIdPipe) id: string) {
     return this.userService.delete(id);
   }
 }

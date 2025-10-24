@@ -4,11 +4,10 @@ import {
   Get,
   Query,
   Render,
-  Req,
   Res,
+  UseFilters,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
 import type { Request, Response } from 'express';
 import Redis from 'ioredis';
 import {
@@ -16,75 +15,66 @@ import {
   generateCodeChallenge,
   generateCodeVerifier,
 } from 'src/utils/pkce.utils';
-import type { AxiosError, AxiosResponse } from 'axios';
-import qs from 'qs';
-
-interface TwitterTokenResponse {
-  token_type: string;
-  expires_in: number;
-  access_token: string;
-  scope: string;
-  refresh_token?: string; // si solicitaste offline.access
-}
+import { UsersService } from 'src/users/users.service';
+import { Public } from 'src/common/decorators/public.decorator';
+import { TwitterService } from './twitter.service';
+import { JwtAuthService } from './jwt-auth.service';
+import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
+import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
+import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
+import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
+import { Cookie } from 'src/common/decorators/cookie.decorator';
+import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
+import type { UserDocument } from 'src/users/schemas/user.schema';
 
 const redis = new Redis();
 
+@UseFilters(
+  TwErrorRequestFilter,
+  TwErrorServerFilter,
+  DbErrorServerFilter,
+  DbErrorRequestFilter,
+)
 @Controller('auth')
 export class AuthController {
-  private readonly clientId: string;
-  private readonly clientSecret: string;
-  private readonly urlAuth: string;
-  private readonly urlToken: string;
-  private readonly urlCallback: string;
+  private mode;
 
-  constructor(private configService: ConfigService) {
-    this.clientId = configService.get<string>('TWITTER_CLIENT_ID', {
-      infer: true,
-    }) as string;
-    this.clientSecret = configService.get<string>('TWITTER_CLIENT_SECRET', {
-      infer: true,
-    }) as string;
-    this.urlAuth = configService.get<string>('TWITTER_URL_AUTH', {
-      infer: true,
-    }) as string;
-    this.urlToken = configService.get<string>('TWITTER_URL_TOKEN', {
-      infer: true,
-    }) as string;
-    this.urlCallback = configService.get<string>('TWITTER_URL_CALLBACK', {
-      infer: true,
-    }) as string;
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly userService: UsersService,
+    private readonly twitterService: TwitterService,
+    private readonly jwtAuthService: JwtAuthService,
+  ) {
+    this.mode = this.configService.get<string>('MODE') as string;
   }
 
+  @Public()
   @Get('login')
   @Render('login.hbs')
   twitter() {
-    return {};
+    return;
   }
 
+  @Public()
   @Get('twitter')
-  async login(@Req() req: Request, @Res() res: Response) {
+  async login(
+    @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
+    @Res() res: Response,
+  ) {
+    if (user) res.redirect('/');
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
     const ticket = createTicket();
     await redis.setex(`twitterpkce:${ticket}`, 600, codeVerifier);
 
-    const params = new URLSearchParams({
-      response_type: 'code',
-      client_id: this.clientId,
-      redirect_uri: this.urlCallback,
-      scope: 'tweet.read users.read offline.access',
-      state: ticket,
-      code_challenge: codeChallenge,
-      code_challenge_method: 'S256',
-    });
-    const url = new URL(this.urlAuth);
-    url.search = params.toString();
-    res.redirect(url.toString());
+    const url = this.twitterService.createUrlLogin(ticket, codeChallenge);
+    res.redirect(url);
   }
 
+  @Public()
   @Get('callback')
-  @Render('log.hbs')
   async callback(@Query() query: Record<string, string>, @Res() res: Response) {
+    // Get tokens
     const { state: ticket, code } = query;
     if (!ticket) throw new BadRequestException('There is no state');
 
@@ -92,42 +82,28 @@ export class AuthController {
     if (!codeVerifier)
       throw new BadRequestException('There is no code verifier');
 
-    let response: TwitterTokenResponse | string;
-    const basicAuth = Buffer.from(
-      `${this.clientId}:${this.clientSecret}`,
-    ).toString('base64');
-    try {
-      const data = qs.stringify({
-        client_id: this.clientId,
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: this.urlCallback,
-        code_verifier: codeVerifier,
-      });
-      const result: AxiosResponse<TwitterTokenResponse> = await axios.post(
-        this.urlToken,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${basicAuth}`,
-          },
-        },
-      );
-      response = result.data;
-    } catch (err) {
-      const axiosError = err as AxiosError;
-      response = axiosError.response?.data
-        ? JSON.stringify(axiosError.response.data)
-        : axiosError.message;
-    }
+    const { accesToken, refreshToken } =
+      await this.twitterService.extractTokens(code, codeVerifier);
 
+    // Get user
+    const user = await this.twitterService.getOrCreateUser(
+      accesToken,
+      refreshToken,
+    );
     await redis.del(`twitterpkce:${ticket}`);
-    return {
-      response:
-        typeof response === 'string'
-          ? response
-          : JSON.stringify(response, null, 2),
+
+    // Create JWT token
+    const tokenJwt = this.jwtAuthService.createTokenJWT(user);
+    const isProd = this.mode === 'prod';
+    const cookieOptions = {
+      httpOnly: true,
+      secure: !!isProd,
+      sameSite: isProd ? ('none' as const) : ('lax' as const),
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: '/',
+      signed: !!isProd,
     };
+
+    res.cookie('jwt', tokenJwt, cookieOptions).redirect('/');
   }
 }
