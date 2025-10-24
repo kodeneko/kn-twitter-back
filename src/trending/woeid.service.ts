@@ -10,9 +10,9 @@ export class WoeidService {
     @InjectModel(Woeid.name) private woeidModel: Model<WoeidDocument>,
   ) {}
 
-  async find(name: string): Promise<WoeidDocument[]> {
+  async find(place: string): Promise<WoeidDocument[]> {
     return this.woeidModel
-      .find({ place: `/${name}/i` })
+      .find({ name: new RegExp(place, 'i') })
       .exec()
       .catch((err: Error) => {
         throw new DbNotFoundException(err.message);

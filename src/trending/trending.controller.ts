@@ -3,21 +3,23 @@ import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filte
 import { Controller, Get, Param, UseFilters, UseGuards } from '@nestjs/common';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
 import { JwtGuard } from 'src/auth/jwt.guard';
-import { Cookie } from 'src/common/decorators/cookie.decorator';
-import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
-import type { UserDocument } from 'src/users/schemas/user.schema';
+import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
+import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
 
-@UseFilters(DbErrorServerFilter, DbErrorRequestFilter, DbErrorRequestFilter)
-@Controller('posts')
+@UseFilters(
+  TwErrorRequestFilter,
+  TwErrorServerFilter,
+  DbErrorServerFilter,
+  DbErrorRequestFilter,
+)
+@UseGuards(JwtGuard)
+@Controller('trending')
 export class TrendingController {
   constructor(private readonly trendingService: TrendingService) {}
 
   @UseGuards(JwtGuard)
-  @Get(':place')
-  get(
-    @Param('place') place: string,
-    @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
-  ) {
-    return this.trendingService.getByPlace(place, user.twitter.token);
+  @Get(':woeid')
+  get(@Param('woeid') woeid: string) {
+    return this.trendingService.getByPlace(woeid);
   }
 }

@@ -12,6 +12,7 @@ export class TwErrorServerFilter implements ExceptionFilter {
     res.status(500).json({
       path: req.url,
       timestamp: new Date().toISOString(),
+      nest: 'TwErrorServerFilter',
       message: exception.message,
       details: exception.details,
       stack: exception.stack,

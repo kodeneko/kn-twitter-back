@@ -6,8 +6,6 @@ import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.m
 import { DaysRangePipe } from './pipes/days-range.pipe';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { Cookie } from 'src/common/decorators/cookie.decorator';
-import { JwtAuthService } from 'src/auth/jwt-auth.service';
-import { UsersService } from 'src/users/users.service';
 import type { UserDocument } from 'src/users/schemas/user.schema';
 import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
 import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
@@ -24,11 +22,7 @@ import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.fil
 )
 @Controller('posts')
 export class PostsController {
-  constructor(
-    private readonly postsService: PostsService,
-    private readonly jwtAuthService: JwtAuthService,
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly postsService: PostsService) {}
 
   @Get('count')
   countThreeDays(
@@ -40,12 +34,12 @@ export class PostsController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('posts')
-  async postsOneDay(
+  @Get()
+  postsOneDay(
     @Query('days', DaysRangePipe) days: number,
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
   ): Promise<TwitterSearchResponse> {
     const date = getDateBeforeISO(days, 'days');
-    return this.postsService.posts(date, user.twitter.id, user.twitter.token);
+    return this.postsService.posts(date, user.twitter.id);
   }
 }

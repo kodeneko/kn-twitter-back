@@ -1,468 +1,468 @@
-name;id;country
-Worldwide;1;World
-Winnipeg;2972;Canada
-Ottawa;3369;Canada
-Quebec;3444;Canada
-Montreal;3534;Canada
-Toronto;4118;Canada
-Edmonton;8676;Canada
-Calgary;8775;Canada
-Vancouver;9807;Canada
-Birmingham;12723;United Kingdom
-Blackpool;12903;United Kingdom
-Bournemouth;13383;United Kingdom
-Brighton;13911;United Kingdom
-Bristol;13963;United Kingdom
-Cardiff;15127;United Kingdom
-Coventry;17044;United Kingdom
-Derby;18114;United Kingdom
-Edinburgh;19344;United Kingdom
-Glasgow;21125;United Kingdom
-Hull;25211;United Kingdom
-Leeds;26042;United Kingdom
-Leicester;26062;United Kingdom
-Liverpool;26734;United Kingdom
-Manchester;28218;United Kingdom
-Middlesbrough;28869;United Kingdom
-Newcastle;30079;United Kingdom
-Nottingham;30720;United Kingdom
-Plymouth;32185;United Kingdom
-Portsmouth;32452;United Kingdom
-Preston;32566;United Kingdom
-Sheffield;34503;United Kingdom
-Stoke-on-Trent;36240;United Kingdom
-Swansea;36758;United Kingdom
-London;44418;United Kingdom
-Belfast;44544;United Kingdom
-Santo Domingo;76456;Dominican Republic
-Guatemala City;83123;Guatemala
-Acapulco;110978;Mexico
-Aguascalientes;111579;Mexico
-Chihuahua;115958;Mexico
-Mexico City;116545;Mexico
-Ciudad Juarez;116556;Mexico
-Nezahualcóyotl;116564;Mexico
-Culiacán;117994;Mexico
-Ecatepec de Morelos;118466;Mexico
-Guadalajara;124162;Mexico
-Hermosillo;124785;Mexico
-León;131068;Mexico
-Mérida;133327;Mexico
-Mexicali;133475;Mexico
-Monterrey;134047;Mexico
-Morelia;134091;Mexico
-Naucalpan de Juárez;134395;Mexico
-Puebla;137612;Mexico
-Querétaro;138045;Mexico
-Saltillo;141272;Mexico
-San Luis Potosí;144265;Mexico
-Tijuana;149361;Mexico
-Toluca;149769;Mexico
-Zapopan;151582;Mexico
-Mendoza;332471;Argentina
-Santiago;349859;Chile
-Concepcion;349860;Chile
-Valparaiso;349861;Chile
-Bogotá;368148;Colombia
-Cali;368149;Colombia
-Medellín;368150;Colombia
-Barranquilla;368151;Colombia
-Quito;375732;Ecuador
-Guayaquil;375733;Ecuador
-Caracas;395269;Venezuela
-Maracaibo;395270;Venezuela
-Maracay;395271;Venezuela
-Valencia;395272;Venezuela
-Barcelona;395273;Venezuela
-Ciudad Guayana;395275;Venezuela
-Turmero;395277;Venezuela
-Lima;418440;Peru
-Brasília;455819;Brazil
-Belém;455820;Brazil
-Belo Horizonte;455821;Brazil
-Curitiba;455822;Brazil
-Porto Alegre;455823;Brazil
-Recife;455824;Brazil
-Rio de Janeiro;455825;Brazil
-Salvador;455826;Brazil
-São Paulo;455827;Brazil
-Campinas;455828;Brazil
-Fortaleza;455830;Brazil
-Goiânia;455831;Brazil
-Manaus;455833;Brazil
-São Luís;455834;Brazil
-Guarulhos;455867;Brazil
-Córdoba;466861;Argentina
-Rosario;466862;Argentina
-Barquisimeto;468382;Venezuela
-Maturín;468384;Venezuela
-Buenos Aires;468739;Argentina
-Gdańsk;493417;Poland
-Kraków;502075;Poland
-Lodz;505120;Poland
-Poznań;514048;Poland
-Warsaw;523920;Poland
-Wroclaw;526363;Poland
-Vienna;551801;Austria
-Cork;560472;Ireland
-Dublin;560743;Ireland
-Galway;560912;Ireland
-Bordeaux;580778;France
-Lille;608105;France
-Lyon;609125;France
-Marseille;610264;France
-Montpellier;612977;France
-Nantes;613858;France
-Paris;615702;France
-Rennes;619163;France
-Strasbourg;627791;France
-Toulouse;628886;France
-Berlin;638242;Germany
-Bremen;641142;Germany
-Dortmund;645458;Germany
-Dresden;645686;Germany
-Dusseldorf;646099;Germany
-Essen;648820;Germany
-Frankfurt;650272;Germany
-Hamburg;656958;Germany
-Cologne;667931;Germany
-Leipzig;671072;Germany
-Munich;676757;Germany
-Stuttgart;698064;Germany
-Bologna;711080;Italy
-Genoa;716085;Italy
-Milan;718345;Italy
-Naples;719258;Italy
-Palermo;719846;Italy
-Rome;721943;Italy
-Turin;725003;Italy
-Den Haag;726874;Netherlands
-Amsterdam;727232;Netherlands
-Rotterdam;733075;Netherlands
-Utrecht;734047;Netherlands
-Barcelona;753692;Spain
-Bilbao;754542;Spain
-Las Palmas;764814;Spain
-Madrid;766273;Spain
-Malaga;766356;Spain
-Murcia;768026;Spain
-Palma;769293;Spain
-Seville;774508;Spain
-Valencia;776688;Spain
-Zaragoza;779063;Spain
-Geneva;782538;Switzerland
-Lausanne;783058;Switzerland
-Zurich;784794;Switzerland
-Brest;824382;Belarus
-Grodno;825848;Belarus
-Gomel;825978;Belarus
-Minsk;834463;Belarus
-Riga;854823;Latvia
-Bergen;857105;Norway
-Oslo;862592;Norway
-Gothenburg;890869;Sweden
-Stockholm;906057;Sweden
-Dnipropetrovsk;918981;Ukraine
-Donetsk;919163;Ukraine
-Kharkiv;922137;Ukraine
-Kyiv;924938;Ukraine
-Lviv;924943;Ukraine
-Odesa;929398;Ukraine
-Zaporozhye;939628;Ukraine
-Athens;946738;Greece
-Thessaloniki;963291;Greece
-Bekasi;1030077;Indonesia
-Depok;1032539;Indonesia
-Pekanbaru;1040779;Indonesia
-Surabaya;1044316;Indonesia
-Makassar;1046138;Indonesia
-Bandung;1047180;Indonesia
-Jakarta;1047378;Indonesia
-Medan;1047908;Indonesia
-Palembang;1048059;Indonesia
-Semarang;1048324;Indonesia
-Tangerang;1048536;Indonesia
-Singapore;1062617;Singapore
-Perth;1098081;Australia
-Adelaide;1099805;Australia
-Brisbane;1100661;Australia
-Canberra;1100968;Australia
-Darwin;1101597;Australia
-Melbourne;1103816;Australia
-Sydney;1105779;Australia
-Kitakyushu;1110809;Japan
-Saitama;1116753;Japan
-Chiba;1117034;Japan
-Fukuoka;1117099;Japan
-Hamamatsu;1117155;Japan
-Hiroshima;1117227;Japan
-Kawasaki;1117502;Japan
-Kobe;1117545;Japan
-Kumamoto;1117605;Japan
-Nagoya;1117817;Japan
-Niigata;1117881;Japan
-Sagamihara;1118072;Japan
-Sapporo;1118108;Japan
-Sendai;1118129;Japan
-Takamatsu;1118285;Japan
-Tokyo;1118370;Japan
-Yokohama;1118550;Japan
-Goyang;1130853;Korea
-Yongin;1132094;Korea
-Ansan;1132444;Korea
-Bucheon;1132445;Korea
-Busan;1132447;Korea
-Changwon;1132449;Korea
-Daegu;1132466;Korea
-Gwangju;1132481;Korea
-Incheon;1132496;Korea
-Seongnam;1132559;Korea
-Suwon;1132567;Korea
-Ulsan;1132578;Korea
-Seoul;1132599;Korea
-Kajang;1141268;Malaysia
-Ipoh;1154679;Malaysia
-Johor Bahru;1154698;Malaysia
-Klang;1154726;Malaysia
-Kuala Lumpur;1154781;Malaysia
-Calocan;1167715;Philippines
-Makati;1180689;Philippines
-Pasig;1187115;Philippines
-Taguig;1195098;Philippines
-Antipolo;1198785;Philippines
-Cagayan de Oro;1199002;Philippines
-Cebu City;1199079;Philippines
-Davao City;1199136;Philippines
-Manila;1199477;Philippines
-Quezon City;1199682;Philippines
-Zamboanga City;1199980;Philippines
-Bangkok;1225448;Thailand
-Hanoi;1236594;Vietnam
-Hai Phong;1236690;Vietnam
-Can Tho;1252351;Vietnam
-Da Nang;1252376;Vietnam
-Ho Chi Minh City;1252431;Vietnam
-Algiers;1253079;Algeria
-Accra;1326075;Ghana
-Kumasi;1330595;Ghana
-Benin City;1387660;Nigeria
-Ibadan;1393672;Nigeria
-Kaduna;1396439;Nigeria
-Kano;1396803;Nigeria
-Lagos;1398823;Nigeria
-Port Harcourt;1404447;Nigeria
-Giza;1521643;Egypt
-Cairo;1521894;Egypt
-Alexandria;1522006;Egypt
-Mombasa;1528335;Kenya
-Nairobi;1528488;Kenya
-Durban;1580913;South Africa
-Johannesburg;1582504;South Africa
-Port Elizabeth;1586614;South Africa
-Pretoria;1586638;South Africa
-Soweto;1587677;South Africa (Unknown)
-Cape Town;1591691;South Africa
-Medina;1937801;Saudi Arabia
-Dammam;1939574;Saudi Arabia
-Riyadh;1939753;Saudi Arabia
-Jeddah;1939873;Saudi Arabia
-Mecca;1939897;Saudi Arabia
-Sharjah;1940119;United Arab Emirates
-Abu Dhabi;1940330;United Arab Emirates
-Dubai;1940345;United Arab Emirates
-Haifa;1967449;Israel
-Tel Aviv;1968212;Israel
-Jerusalem;1968222;Israel
-Amman;1968902;Jordan
-Chelyabinsk;1997422;Russia
-Khabarovsk;2018708;Russia
-Krasnodar;2028717;Russia
-Krasnoyarsk;2029043;Russia
-Samara;2077746;Russia
-Voronezh;2108210;Russia
-Yekaterinburg;2112237;Russia
-Irkutsk;2121040;Russia
-Kazan;2121267;Russia
-Moscow;2122265;Russia
-Nizhny Novgorod;2122471;Russia
-Novosibirsk;2122541;Russia
-Omsk;2122641;Russia
-Perm;2122814;Russia
-Rostov-on-Don;2123177;Russia
-Saint Petersburg;2123260;Russia
-Ufa;2124045;Russia
-Vladivostok;2124288;Russia
-Volgograd;2124298;Russia
-Karachi;2211096;Pakistan
-Lahore;2211177;Pakistan
-Multan;2211269;Pakistan
-Rawalpindi;2211387;Pakistan
-Faisalabad;2211574;Pakistan
-Muscat;2268284;Oman
-Nagpur;2282863;India
-Lucknow;2295377;India
-Kanpur;2295378;India
-Patna;2295381;India
-Ranchi;2295383;India
-Kolkata;2295386;India
-Srinagar;2295387;India
-Amritsar;2295388;India
-Jaipur;2295401;India
-Ahmedabad;2295402;India
-Rajkot;2295404;India
-Surat;2295405;India
-Bhopal;2295407;India
-Indore;2295408;India
-Thane;2295410;India
-Mumbai;2295411;India
-Pune;2295412;India
-Hyderabad;2295414;India
-Bangalore;2295420;India
-Chennai;2295424;India
-Mersin;2323778;Turkey
-Adana;2343678;Turkey
-Ankara;2343732;Turkey
-Antalya;2343733;Turkey
-Bursa;2343843;Turkey
-Diyarbakır;2343932;Turkey
-Eskişehir;2343980;Turkey
-Gaziantep;2343999;Turkey
-Istanbul;2344116;Turkey
-Izmir;2344117;Turkey
-Kayseri;2344174;Turkey
-Konya;2344210;Turkey
-Okinawa;2345896;Japan
-Daejeon;2345975;Korea
-Auckland;2348079;New Zealand
-Albuquerque;2352824;United States
-Atlanta;2357024;United States
-Austin;2357536;United States
-Baltimore;2358820;United States
-Baton Rouge;2359991;United States
-Birmingham;2364559;United States
-Boston;2367105;United States
-Charlotte;2378426;United States
-Chicago;2379574;United States
-Cincinnati;2380358;United States
-Cleveland;2381475;United States
-Colorado Springs;2383489;United States
-Columbus;2383660;United States
-Dallas-Ft. Worth;2388929;United States
-Denver;2391279;United States
-Detroit;2391585;United States
-El Paso;2397816;United States
-Fresno;2407517;United States
-Greensboro;2414469;United States
-Harrisburg;2418046;United States
-Honolulu;2423945;United States
-Houston;2424766;United States
-Indianapolis;2427032;United States
-Jackson;2428184;United States
-Jacksonville;2428344;United States
-Kansas City;2430683;United States
-Las Vegas;2436704;United States
-Long Beach;2441472;United States
-Los Angeles;2442047;United States
-Louisville;2442327;United States
-Memphis;2449323;United States
-Mesa;2449808;United States
-Miami;2450022;United States
-Milwaukee;2451822;United States
-Minneapolis;2452078;United States
-Nashville;2457170;United States
-New Haven;2458410;United States
-New Orleans;2458833;United States
-New York;2459115;United States
-Norfolk;2460389;United States
-Oklahoma City;2464592;United States
-Omaha;2465512;United States
-Orlando;2466256;United States
-Philadelphia;2471217;United States
-Phoenix;2471390;United States
-Pittsburgh;2473224;United States
-Portland;2475687;United States
-Providence;2477058;United States
-Raleigh;2478307;United States
-Richmond;2480894;United States
-Sacramento;2486340;United States
-St. Louis;2486982;United States
-Salt Lake City;2487610;United States
-San Antonio;2487796;United States
-San Diego;2487889;United States
-San Francisco;2487956;United States
-San Jose;2488042;United States
-Seattle;2490383;United States
-Tallahassee;2503713;United States
-Tampa;2503863;United States
-Tucson;2508428;United States
-Virginia Beach;2512636;United States
-Washington;2514815;United States
-Osaka;15015370;Japan
-Kyoto;15015372;Japan
-Delhi;20070458;India
-United Arab Emirates;23424738;United Arab Emirates (Country)
-Algeria;23424740;Algeria (Country)
-Argentina;23424747;Argentina (Country)
-Australia;23424748;Australia (Country)
-Austria;23424750;Austria (Country)
-Bahrain;23424753;Bahrain (Country)
-Belgium;23424757;Belgium (Country)
-Belarus;23424765;Belarus (Country)
-Brazil;23424768;Brazil (Country)
-Canada;23424775;Canada (Country)
-Chile;23424782;Chile (Country)
-Colombia;23424787;Colombia (Country)
-Denmark;23424796;Denmark (Country)
-Dominican Republic;23424800;Dominican Republic (Country)
-Ecuador;23424801;Ecuador (Country)
-Egypt;23424802;Egypt (Country)
-Ireland;23424803;Ireland (Country)
-France;23424819;France (Country)
-Ghana;23424824;Ghana (Country)
-Germany;23424829;Germany (Country)
-Greece;23424833;Greece (Country)
-Guatemala;23424834;Guatemala (Country)
-Indonesia;23424846;Indonesia (Country)
-India;23424848;India (Country)
-Israel;23424852;Israel (Country)
-Italy;23424853;Italy (Country)
-Japan;23424856;Japan (Country)
-Jordan;23424860;Jordan (Country)
-Kenya;23424863;Kenya (Country)
-Korea;23424868;Korea (Country)
-Kuwait;23424870;Kuwait (Country)
-Lebanon;23424873;Lebanon (Country)
-Latvia;23424874;Latvia (Country)
-Oman;23424898;Oman (Country)
-Mexico;23424900;Mexico (Country)
-Malaysia;23424901;Malaysia (Country)
-Nigeria;23424908;Nigeria (Country)
-Netherlands;23424909;Netherlands (Country)
-Norway;23424910;Norway (Country)
-New Zealand;23424916;New Zealand (Country)
-Peru;23424919;Peru (Country)
-Pakistan;23424922;Pakistan (Country)
-Poland;23424923;Poland (Country)
-Panama;23424924;Panama (Country)
-Portugal;23424925;Portugal (Country)
-Qatar;23424930;Qatar (Country)
-Philippines;23424934;Philippines (Country)
-Puerto Rico;23424935;Puerto Rico (Country)
-Russia;23424936;Russia (Country)
-Saudi Arabia;23424938;Saudi Arabia (Country)
-South Africa;23424942;South Africa (Country)
-Singapore;23424948;Singapore (Country)
-Spain;23424950;Spain (Country)
-Sweden;23424954;Sweden (Country)
-Switzerland;23424957;Switzerland (Country)
-Thailand;23424960;Thailand (Country)
-Turkey;23424969;Turkey (Country)
-United Kingdom;23424975;United Kingdom (Country)
-Ukraine;23424976;Ukraine (Country)
-United States;23424977;United States (Country)
-Venezuela;23424982;Venezuela (Country)
-Vietnam;23424984;Vietnam (Country)
-Petaling;56013632;Malaysia
-Hulu Langat;56013645;Malaysia
-Ahsa;56120136;Saudi Arabia (Unknown)
-Okayama;90036018;Japan
+name,id,country
+Worldwide,1,World
+Winnipeg,2972,Canada
+Ottawa,3369,Canada
+Quebec,3444,Canada
+Montreal,3534,Canada
+Toronto,4118,Canada
+Edmonton,8676,Canada
+Calgary,8775,Canada
+Vancouver,9807,Canada
+Birmingham,12723,United Kingdom
+Blackpool,12903,United Kingdom
+Bournemouth,13383,United Kingdom
+Brighton,13911,United Kingdom
+Bristol,13963,United Kingdom
+Cardiff,15127,United Kingdom
+Coventry,17044,United Kingdom
+Derby,18114,United Kingdom
+Edinburgh,19344,United Kingdom
+Glasgow,21125,United Kingdom
+Hull,25211,United Kingdom
+Leeds,26042,United Kingdom
+Leicester,26062,United Kingdom
+Liverpool,26734,United Kingdom
+Manchester,28218,United Kingdom
+Middlesbrough,28869,United Kingdom
+Newcastle,30079,United Kingdom
+Nottingham,30720,United Kingdom
+Plymouth,32185,United Kingdom
+Portsmouth,32452,United Kingdom
+Preston,32566,United Kingdom
+Sheffield,34503,United Kingdom
+Stoke-on-Trent,36240,United Kingdom
+Swansea,36758,United Kingdom
+London,44418,United Kingdom
+Belfast,44544,United Kingdom
+Santo Domingo,76456,Dominican Republic
+Guatemala City,83123,Guatemala
+Acapulco,110978,Mexico
+Aguascalientes,111579,Mexico
+Chihuahua,115958,Mexico
+Mexico City,116545,Mexico
+Ciudad Juarez,116556,Mexico
+Nezahualcóyotl,116564,Mexico
+Culiacán,117994,Mexico
+Ecatepec de Morelos,118466,Mexico
+Guadalajara,124162,Mexico
+Hermosillo,124785,Mexico
+León,131068,Mexico
+Mérida,133327,Mexico
+Mexicali,133475,Mexico
+Monterrey,134047,Mexico
+Morelia,134091,Mexico
+Naucalpan de Juárez,134395,Mexico
+Puebla,137612,Mexico
+Querétaro,138045,Mexico
+Saltillo,141272,Mexico
+San Luis Potosí,144265,Mexico
+Tijuana,149361,Mexico
+Toluca,149769,Mexico
+Zapopan,151582,Mexico
+Mendoza,332471,Argentina
+Santiago,349859,Chile
+Concepcion,349860,Chile
+Valparaiso,349861,Chile
+Bogotá,368148,Colombia
+Cali,368149,Colombia
+Medellín,368150,Colombia
+Barranquilla,368151,Colombia
+Quito,375732,Ecuador
+Guayaquil,375733,Ecuador
+Caracas,395269,Venezuela
+Maracaibo,395270,Venezuela
+Maracay,395271,Venezuela
+Valencia,395272,Venezuela
+Barcelona,395273,Venezuela
+Ciudad Guayana,395275,Venezuela
+Turmero,395277,Venezuela
+Lima,418440,Peru
+Brasília,455819,Brazil
+Belém,455820,Brazil
+Belo Horizonte,455821,Brazil
+Curitiba,455822,Brazil
+Porto Alegre,455823,Brazil
+Recife,455824,Brazil
+Rio de Janeiro,455825,Brazil
+Salvador,455826,Brazil
+São Paulo,455827,Brazil
+Campinas,455828,Brazil
+Fortaleza,455830,Brazil
+Goiânia,455831,Brazil
+Manaus,455833,Brazil
+São Luís,455834,Brazil
+Guarulhos,455867,Brazil
+Córdoba,466861,Argentina
+Rosario,466862,Argentina
+Barquisimeto,468382,Venezuela
+Maturín,468384,Venezuela
+Buenos Aires,468739,Argentina
+Gdańsk,493417,Poland
+Kraków,502075,Poland
+Lodz,505120,Poland
+Poznań,514048,Poland
+Warsaw,523920,Poland
+Wroclaw,526363,Poland
+Vienna,551801,Austria
+Cork,560472,Ireland
+Dublin,560743,Ireland
+Galway,560912,Ireland
+Bordeaux,580778,France
+Lille,608105,France
+Lyon,609125,France
+Marseille,610264,France
+Montpellier,612977,France
+Nantes,613858,France
+Paris,615702,France
+Rennes,619163,France
+Strasbourg,627791,France
+Toulouse,628886,France
+Berlin,638242,Germany
+Bremen,641142,Germany
+Dortmund,645458,Germany
+Dresden,645686,Germany
+Dusseldorf,646099,Germany
+Essen,648820,Germany
+Frankfurt,650272,Germany
+Hamburg,656958,Germany
+Cologne,667931,Germany
+Leipzig,671072,Germany
+Munich,676757,Germany
+Stuttgart,698064,Germany
+Bologna,711080,Italy
+Genoa,716085,Italy
+Milan,718345,Italy
+Naples,719258,Italy
+Palermo,719846,Italy
+Rome,721943,Italy
+Turin,725003,Italy
+Den Haag,726874,Netherlands
+Amsterdam,727232,Netherlands
+Rotterdam,733075,Netherlands
+Utrecht,734047,Netherlands
+Barcelona,753692,Spain
+Bilbao,754542,Spain
+Las Palmas,764814,Spain
+Madrid,766273,Spain
+Malaga,766356,Spain
+Murcia,768026,Spain
+Palma,769293,Spain
+Seville,774508,Spain
+Valencia,776688,Spain
+Zaragoza,779063,Spain
+Geneva,782538,Switzerland
+Lausanne,783058,Switzerland
+Zurich,784794,Switzerland
+Brest,824382,Belarus
+Grodno,825848,Belarus
+Gomel,825978,Belarus
+Minsk,834463,Belarus
+Riga,854823,Latvia
+Bergen,857105,Norway
+Oslo,862592,Norway
+Gothenburg,890869,Sweden
+Stockholm,906057,Sweden
+Dnipropetrovsk,918981,Ukraine
+Donetsk,919163,Ukraine
+Kharkiv,922137,Ukraine
+Kyiv,924938,Ukraine
+Lviv,924943,Ukraine
+Odesa,929398,Ukraine
+Zaporozhye,939628,Ukraine
+Athens,946738,Greece
+Thessaloniki,963291,Greece
+Bekasi,1030077,Indonesia
+Depok,1032539,Indonesia
+Pekanbaru,1040779,Indonesia
+Surabaya,1044316,Indonesia
+Makassar,1046138,Indonesia
+Bandung,1047180,Indonesia
+Jakarta,1047378,Indonesia
+Medan,1047908,Indonesia
+Palembang,1048059,Indonesia
+Semarang,1048324,Indonesia
+Tangerang,1048536,Indonesia
+Singapore,1062617,Singapore
+Perth,1098081,Australia
+Adelaide,1099805,Australia
+Brisbane,1100661,Australia
+Canberra,1100968,Australia
+Darwin,1101597,Australia
+Melbourne,1103816,Australia
+Sydney,1105779,Australia
+Kitakyushu,1110809,Japan
+Saitama,1116753,Japan
+Chiba,1117034,Japan
+Fukuoka,1117099,Japan
+Hamamatsu,1117155,Japan
+Hiroshima,1117227,Japan
+Kawasaki,1117502,Japan
+Kobe,1117545,Japan
+Kumamoto,1117605,Japan
+Nagoya,1117817,Japan
+Niigata,1117881,Japan
+Sagamihara,1118072,Japan
+Sapporo,1118108,Japan
+Sendai,1118129,Japan
+Takamatsu,1118285,Japan
+Tokyo,1118370,Japan
+Yokohama,1118550,Japan
+Goyang,1130853,Korea
+Yongin,1132094,Korea
+Ansan,1132444,Korea
+Bucheon,1132445,Korea
+Busan,1132447,Korea
+Changwon,1132449,Korea
+Daegu,1132466,Korea
+Gwangju,1132481,Korea
+Incheon,1132496,Korea
+Seongnam,1132559,Korea
+Suwon,1132567,Korea
+Ulsan,1132578,Korea
+Seoul,1132599,Korea
+Kajang,1141268,Malaysia
+Ipoh,1154679,Malaysia
+Johor Bahru,1154698,Malaysia
+Klang,1154726,Malaysia
+Kuala Lumpur,1154781,Malaysia
+Calocan,1167715,Philippines
+Makati,1180689,Philippines
+Pasig,1187115,Philippines
+Taguig,1195098,Philippines
+Antipolo,1198785,Philippines
+Cagayan de Oro,1199002,Philippines
+Cebu City,1199079,Philippines
+Davao City,1199136,Philippines
+Manila,1199477,Philippines
+Quezon City,1199682,Philippines
+Zamboanga City,1199980,Philippines
+Bangkok,1225448,Thailand
+Hanoi,1236594,Vietnam
+Hai Phong,1236690,Vietnam
+Can Tho,1252351,Vietnam
+Da Nang,1252376,Vietnam
+Ho Chi Minh City,1252431,Vietnam
+Algiers,1253079,Algeria
+Accra,1326075,Ghana
+Kumasi,1330595,Ghana
+Benin City,1387660,Nigeria
+Ibadan,1393672,Nigeria
+Kaduna,1396439,Nigeria
+Kano,1396803,Nigeria
+Lagos,1398823,Nigeria
+Port Harcourt,1404447,Nigeria
+Giza,1521643,Egypt
+Cairo,1521894,Egypt
+Alexandria,1522006,Egypt
+Mombasa,1528335,Kenya
+Nairobi,1528488,Kenya
+Durban,1580913,South Africa
+Johannesburg,1582504,South Africa
+Port Elizabeth,1586614,South Africa
+Pretoria,1586638,South Africa
+Soweto,1587677,South Africa (Unknown)
+Cape Town,1591691,South Africa
+Medina,1937801,Saudi Arabia
+Dammam,1939574,Saudi Arabia
+Riyadh,1939753,Saudi Arabia
+Jeddah,1939873,Saudi Arabia
+Mecca,1939897,Saudi Arabia
+Sharjah,1940119,United Arab Emirates
+Abu Dhabi,1940330,United Arab Emirates
+Dubai,1940345,United Arab Emirates
+Haifa,1967449,Israel
+Tel Aviv,1968212,Israel
+Jerusalem,1968222,Israel
+Amman,1968902,Jordan
+Chelyabinsk,1997422,Russia
+Khabarovsk,2018708,Russia
+Krasnodar,2028717,Russia
+Krasnoyarsk,2029043,Russia
+Samara,2077746,Russia
+Voronezh,2108210,Russia
+Yekaterinburg,2112237,Russia
+Irkutsk,2121040,Russia
+Kazan,2121267,Russia
+Moscow,2122265,Russia
+Nizhny Novgorod,2122471,Russia
+Novosibirsk,2122541,Russia
+Omsk,2122641,Russia
+Perm,2122814,Russia
+Rostov-on-Don,2123177,Russia
+Saint Petersburg,2123260,Russia
+Ufa,2124045,Russia
+Vladivostok,2124288,Russia
+Volgograd,2124298,Russia
+Karachi,2211096,Pakistan
+Lahore,2211177,Pakistan
+Multan,2211269,Pakistan
+Rawalpindi,2211387,Pakistan
+Faisalabad,2211574,Pakistan
+Muscat,2268284,Oman
+Nagpur,2282863,India
+Lucknow,2295377,India
+Kanpur,2295378,India
+Patna,2295381,India
+Ranchi,2295383,India
+Kolkata,2295386,India
+Srinagar,2295387,India
+Amritsar,2295388,India
+Jaipur,2295401,India
+Ahmedabad,2295402,India
+Rajkot,2295404,India
+Surat,2295405,India
+Bhopal,2295407,India
+Indore,2295408,India
+Thane,2295410,India
+Mumbai,2295411,India
+Pune,2295412,India
+Hyderabad,2295414,India
+Bangalore,2295420,India
+Chennai,2295424,India
+Mersin,2323778,Turkey
+Adana,2343678,Turkey
+Ankara,2343732,Turkey
+Antalya,2343733,Turkey
+Bursa,2343843,Turkey
+Diyarbakır,2343932,Turkey
+Eskişehir,2343980,Turkey
+Gaziantep,2343999,Turkey
+Istanbul,2344116,Turkey
+Izmir,2344117,Turkey
+Kayseri,2344174,Turkey
+Konya,2344210,Turkey
+Okinawa,2345896,Japan
+Daejeon,2345975,Korea
+Auckland,2348079,New Zealand
+Albuquerque,2352824,United States
+Atlanta,2357024,United States
+Austin,2357536,United States
+Baltimore,2358820,United States
+Baton Rouge,2359991,United States
+Birmingham,2364559,United States
+Boston,2367105,United States
+Charlotte,2378426,United States
+Chicago,2379574,United States
+Cincinnati,2380358,United States
+Cleveland,2381475,United States
+Colorado Springs,2383489,United States
+Columbus,2383660,United States
+Dallas-Ft. Worth,2388929,United States
+Denver,2391279,United States
+Detroit,2391585,United States
+El Paso,2397816,United States
+Fresno,2407517,United States
+Greensboro,2414469,United States
+Harrisburg,2418046,United States
+Honolulu,2423945,United States
+Houston,2424766,United States
+Indianapolis,2427032,United States
+Jackson,2428184,United States
+Jacksonville,2428344,United States
+Kansas City,2430683,United States
+Las Vegas,2436704,United States
+Long Beach,2441472,United States
+Los Angeles,2442047,United States
+Louisville,2442327,United States
+Memphis,2449323,United States
+Mesa,2449808,United States
+Miami,2450022,United States
+Milwaukee,2451822,United States
+Minneapolis,2452078,United States
+Nashville,2457170,United States
+New Haven,2458410,United States
+New Orleans,2458833,United States
+New York,2459115,United States
+Norfolk,2460389,United States
+Oklahoma City,2464592,United States
+Omaha,2465512,United States
+Orlando,2466256,United States
+Philadelphia,2471217,United States
+Phoenix,2471390,United States
+Pittsburgh,2473224,United States
+Portland,2475687,United States
+Providence,2477058,United States
+Raleigh,2478307,United States
+Richmond,2480894,United States
+Sacramento,2486340,United States
+St. Louis,2486982,United States
+Salt Lake City,2487610,United States
+San Antonio,2487796,United States
+San Diego,2487889,United States
+San Francisco,2487956,United States
+San Jose,2488042,United States
+Seattle,2490383,United States
+Tallahassee,2503713,United States
+Tampa,2503863,United States
+Tucson,2508428,United States
+Virginia Beach,2512636,United States
+Washington,2514815,United States
+Osaka,15015370,Japan
+Kyoto,15015372,Japan
+Delhi,20070458,India
+United Arab Emirates,23424738,United Arab Emirates (Country)
+Algeria,23424740,Algeria (Country)
+Argentina,23424747,Argentina (Country)
+Australia,23424748,Australia (Country)
+Austria,23424750,Austria (Country)
+Bahrain,23424753,Bahrain (Country)
+Belgium,23424757,Belgium (Country)
+Belarus,23424765,Belarus (Country)
+Brazil,23424768,Brazil (Country)
+Canada,23424775,Canada (Country)
+Chile,23424782,Chile (Country)
+Colombia,23424787,Colombia (Country)
+Denmark,23424796,Denmark (Country)
+Dominican Republic,23424800,Dominican Republic (Country)
+Ecuador,23424801,Ecuador (Country)
+Egypt,23424802,Egypt (Country)
+Ireland,23424803,Ireland (Country)
+France,23424819,France (Country)
+Ghana,23424824,Ghana (Country)
+Germany,23424829,Germany (Country)
+Greece,23424833,Greece (Country)
+Guatemala,23424834,Guatemala (Country)
+Indonesia,23424846,Indonesia (Country)
+India,23424848,India (Country)
+Israel,23424852,Israel (Country)
+Italy,23424853,Italy (Country)
+Japan,23424856,Japan (Country)
+Jordan,23424860,Jordan (Country)
+Kenya,23424863,Kenya (Country)
+Korea,23424868,Korea (Country)
+Kuwait,23424870,Kuwait (Country)
+Lebanon,23424873,Lebanon (Country)
+Latvia,23424874,Latvia (Country)
+Oman,23424898,Oman (Country)
+Mexico,23424900,Mexico (Country)
+Malaysia,23424901,Malaysia (Country)
+Nigeria,23424908,Nigeria (Country)
+Netherlands,23424909,Netherlands (Country)
+Norway,23424910,Norway (Country)
+New Zealand,23424916,New Zealand (Country)
+Peru,23424919,Peru (Country)
+Pakistan,23424922,Pakistan (Country)
+Poland,23424923,Poland (Country)
+Panama,23424924,Panama (Country)
+Portugal,23424925,Portugal (Country)
+Qatar,23424930,Qatar (Country)
+Philippines,23424934,Philippines (Country)
+Puerto Rico,23424935,Puerto Rico (Country)
+Russia,23424936,Russia (Country)
+Saudi Arabia,23424938,Saudi Arabia (Country)
+South Africa,23424942,South Africa (Country)
+Singapore,23424948,Singapore (Country)
+Spain,23424950,Spain (Country)
+Sweden,23424954,Sweden (Country)
+Switzerland,23424957,Switzerland (Country)
+Thailand,23424960,Thailand (Country)
+Turkey,23424969,Turkey (Country)
+United Kingdom,23424975,United Kingdom (Country)
+Ukraine,23424976,Ukraine (Country)
+United States,23424977,United States (Country)
+Venezuela,23424982,Venezuela (Country)
+Vietnam,23424984,Vietnam (Country)
+Petaling,56013632,Malaysia
+Hulu Langat,56013645,Malaysia
+Ahsa,56120136,Saudi Arabia (Unknown)
+Okayama,90036018,Japan
