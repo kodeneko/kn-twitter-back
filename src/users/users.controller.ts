@@ -44,29 +44,16 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id', ParseObjectIdPipe) id: string) {
-    const user = await this.userService.findOne(id);
-    if (!user) {
-      throw new NotFoundException(`User ${id} not found`);
-    }
-    return user;
+    return this.userService.findOne(id);
   }
 
   @Put()
   async put(@Body() updateUserDto: UpdateUserDto) {
-    const updated = await this.userService.update(updateUserDto);
-    if (!updated) {
-      throw new NotFoundException(`User ${updateUserDto._id} not found`);
-    }
-    return updated;
+    return this.userService.update(updateUserDto);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id', ParseObjectIdPipe) id: string) {
-    const deleted = await this.userService.delete(id);
-    if (!deleted) {
-      throw new NotFoundException(`User ${id} not found`);
-    }
-    return;
+    return this.userService.delete(id);
   }
 }
