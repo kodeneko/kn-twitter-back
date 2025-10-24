@@ -67,7 +67,6 @@ export class AuthController {
 
   @Public()
   @Get('callback')
-  @Render('log.hbs')
   async callback(@Query() query: Record<string, string>, @Res() res: Response) {
     // Get tokens
     const { state: ticket, code } = query;
@@ -99,7 +98,6 @@ export class AuthController {
       signed: !!isProd,
     };
 
-    res.cookie('jwt', tokenJwt, cookieOptions);
-    res.redirect('/');
+    res.cookie('jwt', tokenJwt, cookieOptions).redirect('/');
   }
 }

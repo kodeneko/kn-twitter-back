@@ -10,7 +10,6 @@ import {
   UseFilters,
   HttpCode,
   HttpStatus,
-  NotFoundException,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';

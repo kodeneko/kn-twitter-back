@@ -46,6 +46,6 @@ export class PostsController {
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
   ): Promise<TwitterSearchResponse> {
     const date = getDateBeforeISO(days, 'days');
-    return this.postsService.posts(date, user.twitter.id);
+    return this.postsService.posts(date, user.twitter.id, user.twitter.token);
   }
 }

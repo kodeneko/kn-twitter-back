@@ -40,8 +40,13 @@ export class PostsService {
     })) as TwitterCountsResponse;
   }
 
-  async posts(date: string, user: string): Promise<TwitterSearchResponse> {
+  async posts(
+    date: string,
+    user: string,
+    token: string,
+  ): Promise<TwitterSearchResponse> {
     return (await this.postCall(`https://api.x.com/2/users/${user}/tweets`, {
+      headers: { Authorization: `Bearer ${token}` },
       params: {
         ['end_time']: date,
       },
