@@ -4,7 +4,6 @@ import {
   Get,
   Query,
   Render,
-  Req,
   Res,
   UseFilters,
 } from '@nestjs/common';
@@ -24,6 +23,9 @@ import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-reques
 import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
 import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
+import { Cookie } from 'src/common/decorators/cookie.decorator';
+import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
+import type { UserDocument } from 'src/users/schemas/user.schema';
 
 const redis = new Redis();
 
@@ -50,12 +52,16 @@ export class AuthController {
   @Get('login')
   @Render('login.hbs')
   twitter() {
-    return {};
+    return;
   }
 
   @Public()
   @Get('twitter')
-  async login(@Req() req: Request, @Res() res: Response) {
+  async login(
+    @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
+    @Res() res: Response,
+  ) {
+    if (user) res.redirect('/');
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
     const ticket = createTicket();

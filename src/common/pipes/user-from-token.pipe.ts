@@ -12,8 +12,14 @@ export class UserFromTokenPipe implements PipeTransform {
   ) {}
 
   async transform(jwt: string) {
-    const jwtPayload: JwtTokenPayload = this.jwtAuthService.checkTokenJWT(jwt);
-    const user: UserDocument = await this.usersService.findOne(jwtPayload.sub);
+    let user: UserDocument | undefined;
+    try {
+      const jwtPayload: JwtTokenPayload =
+        this.jwtAuthService.checkTokenJWT(jwt);
+      user = await this.usersService.findOne(jwtPayload.sub);
+    } catch {
+      user = undefined;
+    }
     return user;
   }
 }
