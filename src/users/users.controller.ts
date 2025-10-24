@@ -34,10 +34,10 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(@Query('limit') limit?: number, @Query('skip') skip?: number) {
+  async findAll(@Query('limit') limit?: string, @Query('skip') skip?: string) {
     return this.userService.findAll({
-      limit: limit ? Number(limit) : 10,
-      skip: skip ? Number(skip) : 0,
+      limit: limit ? parseInt(limit, 10) : 10,
+      skip: skip ? parseInt(skip, 10) : 0,
     });
   }
 
