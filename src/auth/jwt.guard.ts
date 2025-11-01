@@ -42,7 +42,8 @@ export class JwtGuard implements CanActivate {
       }
     >();
     const cookies = this.mode === 'prod' ? req.signedCookies : req.cookies;
-    if (!cookies) {
+
+    if (!cookies || Object.keys(cookies).length === 0) {
       throw new UnauthorizedException('No hay cookies en la petición');
     }
 
