@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  NotFoundException,
   Query,
   Render,
   Res,
@@ -17,7 +18,6 @@ import {
   generateCodeVerifier,
 } from 'src/utils/pkce.utils';
 import { UsersService } from 'src/users/users.service';
-import { Public } from 'src/common/decorators/public.decorator';
 import { TwitterService } from './twitter.service';
 import { JwtAuthService } from './jwt-auth.service';
 import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
@@ -52,7 +52,6 @@ export class AuthController {
     this.frontUrl = this.configService.get<string>('FRONT_URL') as string;
   }
 
-  @Public()
   @Get('login')
   @Render('login.hbs')
   twitter() {
@@ -65,7 +64,6 @@ export class AuthController {
     return res.status(200).json({ msg: 'Está logeado' });
   }
 
-  @Public()
   @Get('twitter')
   async login(
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
@@ -82,7 +80,6 @@ export class AuthController {
     return res.redirect(url);
   }
 
-  @Public()
   @Get('callback')
   async callback(@Query() query: Record<string, string>, @Res() res: Response) {
     // Get tokens
@@ -118,5 +115,17 @@ export class AuthController {
     res
       .cookie('jwt', tokenJwt, cookieOptions)
       .redirect(`${this.frontUrl}/redirect-twitter`);
+  }
+
+  @Get('logout')
+  logout(
+    @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
+    @Res() res: Response,
+  ) {
+    if (!user) throw new NotFoundException('There user was not logged');
+    res
+      .clearCookie('jwt', { path: '/' })
+      .status(200)
+      .json({ msg: 'Deleted info auth' });
   }
 }

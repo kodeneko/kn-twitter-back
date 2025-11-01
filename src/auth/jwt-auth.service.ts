@@ -31,7 +31,7 @@ export class JwtAuthService {
       sub: user._id.toString(), // Subject = ID de usuario
       name: user.username, // claim personalizada
       email: user.email, // claim personalizada
-      // admin: user.admin, // claim personalizada
+      admin: user.admin, // claim personalizada
       iss: this.tokenEmiter, // token emiter
       aud: this.tokenReciever, // token reciever
       exp: Math.floor(Date.now() / 1000) + 60 * 60, // expira en 1 hora

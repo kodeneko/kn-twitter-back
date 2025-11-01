@@ -19,9 +19,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
 import { JwtGuard } from 'src/auth/jwt.guard';
+import { AdminGuard } from 'src/common/guards/admin.guard';
+import { Cookie } from 'src/common/decorators/cookie.decorator';
+import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
+import type { UserDocument } from './schemas/user.schema';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @UseFilters(DbErrorServerFilter, DbErrorRequestFilter, DbErrorRequestFilter)
-@UseGuards(JwtGuard)
+@UseGuards(JwtGuard, AdminGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
@@ -44,6 +49,12 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id', ParseObjectIdPipe) id: string) {
     return this.userService.findOne(id);
+  }
+
+  @Public()
+  @Get('info')
+  async getMyInfo(@Cookie('jwt', UserFromTokenPipe) user: UserDocument) {
+    return this.userService.findOne(user._id.toString());
   }
 
   @Put()
