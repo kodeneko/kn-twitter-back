@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 import { ActivityModule } from './activity/activity.module';
-import { TrendingModule } from './trending/trending.module';
+import { TrendingsModule } from './trendings/trendings.module';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
@@ -21,7 +21,7 @@ import { JwtGuard } from './auth/jwt.guard';
     }),
     PostsModule,
     ActivityModule,
-    TrendingModule,
+    TrendingsModule,
     UsersModule,
     AuthModule,
   ],

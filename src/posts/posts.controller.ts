@@ -25,7 +25,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get('count')
-  countThreeDays(
+  count(
     @Query('query') query: string,
     @Query('days', DaysRangePipe) days: number,
   ): Promise<TwitterCountsResponse> {
@@ -34,8 +34,8 @@ export class PostsController {
   }
 
   @UseGuards(JwtGuard)
-  @Get()
-  postsOneDay(
+  @Get('list')
+  list(
     @Query('days', DaysRangePipe) days: number,
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
   ): Promise<TwitterSearchResponse> {

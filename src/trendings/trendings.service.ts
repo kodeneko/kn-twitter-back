@@ -6,7 +6,7 @@ import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-s
 import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
 
 @Injectable()
-export class TrendingService {
+export class TrendingsService {
   private bearerToken: string;
 
   constructor(private readonly configService: ConfigService) {

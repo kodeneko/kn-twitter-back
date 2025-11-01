@@ -4,8 +4,8 @@ import { AuthModule } from 'src/auth/auth.module';
 import { WoeidController } from './woeid.controller';
 import { Woeid, WoeidSchema } from './schema/woeid.schema';
 import { WoeidService } from './woeid.service';
-import { TrendingService } from './trending.service';
-import { TrendingController } from './trending.controller';
+import { TrendingsService } from './trendings.service';
+import { TrendingsController } from './trendings.controller';
 import { UsersModule } from 'src/users/users.module';
 
 @Module({
@@ -14,8 +14,8 @@ import { UsersModule } from 'src/users/users.module';
     forwardRef(() => AuthModule),
     forwardRef(() => UsersModule),
   ],
-  controllers: [WoeidController, TrendingController],
-  providers: [WoeidService, TrendingService],
+  controllers: [WoeidController, TrendingsController],
+  providers: [WoeidService, TrendingsService],
   exports: [],
 })
-export class TrendingModule {}
+export class TrendingsModule {}
