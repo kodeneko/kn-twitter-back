@@ -1,8 +1,6 @@
 import { Controller, Get, Query, UseFilters, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { getDateBeforeISO } from 'src/utils/time-count.utils';
-import { TwitterCountsResponse } from 'src/auth/models/twitter-count-response.model';
-import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.model';
 import { DaysRangePipe } from './pipes/days-range.pipe';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { Cookie } from 'src/common/decorators/cookie.decorator';
@@ -12,10 +10,14 @@ import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.
 import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
 import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
+import { TwErrorLimitsFilter } from 'src/common/filters/twitter/tw-limits.filter';
+import { TwitterCountsResponse } from 'src/common/models/twitter/twitter-count-response.model';
+import { TwitterSearchResponse } from 'src/common/models/twitter/twitter-search-response.model';
 
 @UseFilters(
   TwErrorRequestFilter,
   TwErrorServerFilter,
+  TwErrorLimitsFilter,
   DbErrorServerFilter,
   DbErrorRequestFilter,
   DbErrorRequestFilter,

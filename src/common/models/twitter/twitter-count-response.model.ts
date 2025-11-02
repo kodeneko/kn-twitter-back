@@ -1,3 +1,5 @@
+import { TwitterError } from './twitter-error.model';
+
 interface TwitterCountDatum {
   start: string;
   end: string;
@@ -6,14 +8,15 @@ interface TwitterCountDatum {
 
 interface TwitterCountsMeta {
   newest_id?: string;
-  oldest_id?: string;
-  result_count?: number;
   next_token?: string;
+  oldest_id?: string;
+  total_tweet_count?: number;
 }
 
 interface TwitterCountsResponse {
   data?: TwitterCountDatum[];
   meta?: TwitterCountsMeta;
+  errors?: TwitterError[];
 }
 
 export type { TwitterCountDatum, TwitterCountsMeta, TwitterCountsResponse };

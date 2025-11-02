@@ -8,10 +8,6 @@ import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtGuard } from './auth/jwt.guard';
-
-// const DB_URL = process.env.DB_URL as string;
 
 @Module({
   imports: [
@@ -26,12 +22,6 @@ import { JwtGuard } from './auth/jwt.guard';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtGuard,
-    },
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

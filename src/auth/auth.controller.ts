@@ -69,8 +69,9 @@ export class AuthController {
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
     @Res() res: Response,
   ) {
+    console.log('test01');
     if (user) return res.redirect(`${this.frontUrl}/redirect-twitter`);
-
+    console.log('test02');
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
     const ticket = createTicket();

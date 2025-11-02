@@ -5,10 +5,12 @@ import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.fil
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
 import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
+import { TwErrorLimitsFilter } from 'src/common/filters/twitter/tw-limits.filter';
 
 @UseFilters(
   TwErrorRequestFilter,
   TwErrorServerFilter,
+  TwErrorLimitsFilter,
   DbErrorServerFilter,
   DbErrorRequestFilter,
 )

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { TwitterCountsResponse } from 'src/auth/models/twitter-count-response.model';
-import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.model';
 import { TwErrorLimitsException } from 'src/common/exceptions/twitter/tw-error-limits.exception';
 import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
 import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
+import { TwitterCountsResponse } from 'src/common/models/twitter/twitter-count-response.model';
+import { TwitterSearchResponse } from 'src/common/models/twitter/twitter-search-response.model';
 
 @Injectable()
 export class PostsService {
