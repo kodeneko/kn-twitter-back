@@ -7,7 +7,7 @@ type TwitterTrendingsData = {
 
 type TwitterTrendingsRes = {
   data?: TwitterTrendingsData[];
-  error?: TwitterError;
+  errors?: TwitterError[];
 };
 
 export type { TwitterTrendingsRes };
