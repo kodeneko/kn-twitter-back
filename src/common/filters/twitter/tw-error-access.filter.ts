@@ -1,19 +1,19 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { TwErrorLimitsException } from 'src/common/exceptions/twitter/tw-error-limits.exception';
+import { TwErrorAccessException } from 'src/common/exceptions/twitter/tw-error-access.exception';
 
-@Catch(TwErrorLimitsException)
-export class TwErrorLimitsFilter implements ExceptionFilter {
-  catch(exception: TwErrorLimitsException, host: ArgumentsHost) {
+@Catch(TwErrorAccessException)
+export class TwErrorAccessFilter implements ExceptionFilter {
+  catch(exception: TwErrorAccessException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
     const req = ctx.getRequest<Request>();
 
-    res.status(429).json({
-      code: 429,
+    res.status(403).json({
+      code: 403,
       path: req.url,
       timestamp: new Date().toISOString(),
-      nest: 'TwErrorServerFilter',
+      nest: 'TwErrorAccessFilter',
       message: exception.message,
       details: exception.details,
       stack: exception.stack,

@@ -6,8 +6,10 @@ import { JwtGuard } from 'src/auth/jwt.guard';
 import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
 import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.filter';
 import { TwErrorLimitsFilter } from 'src/common/filters/twitter/tw-limits.filter';
+import { TwErrorAccessFilter } from 'src/common/filters/twitter/tw-error-access.filter';
 
 @UseFilters(
+  TwErrorAccessFilter,
   TwErrorRequestFilter,
   TwErrorServerFilter,
   TwErrorLimitsFilter,

@@ -13,8 +13,10 @@ import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.fil
 import { TwErrorLimitsFilter } from 'src/common/filters/twitter/tw-limits.filter';
 import { TwitterCountsResponse } from 'src/common/models/twitter/twitter-count-response.model';
 import { TwitterSearchResponse } from 'src/common/models/twitter/twitter-search-response.model';
+import { TwErrorAccessFilter } from 'src/common/filters/twitter/tw-error-access.filter';
 
 @UseFilters(
+  TwErrorAccessFilter,
   TwErrorRequestFilter,
   TwErrorServerFilter,
   TwErrorLimitsFilter,
