@@ -115,7 +115,7 @@ export class TwitterService {
         : new TwErrorRequestException();
     }
     let user: UserDocument;
-    const resFindUser = await this.userService.find({
+    const resFindUser = await this.userService.findComplete({
       ['twitter.id']: userInfo.id,
     });
 
