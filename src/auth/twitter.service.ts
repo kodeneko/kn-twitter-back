@@ -7,11 +7,11 @@ import axios from 'axios';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
 import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
-import { TwitterTokenResponse } from 'src/common/models/twitter/twitter-token-response.model';
 import {
   TwitterMeResponse,
   TwitterMeResponseData,
-} from 'src/common/models/twitter/twitter-me-response.model';
+} from './models/twitter-me-response.model';
+import { TwitterTokenResponse } from './models/twitter-token-response.model';
 
 @Injectable()
 export class TwitterService {

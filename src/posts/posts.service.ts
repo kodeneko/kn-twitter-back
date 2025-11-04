@@ -5,8 +5,8 @@ import { TwErrorAccessException } from 'src/common/exceptions/twitter/tw-error-a
 import { TwErrorLimitsException } from 'src/common/exceptions/twitter/tw-error-limits.exception';
 import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
 import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
-import { TwitterCountsResponse } from 'src/common/models/twitter/twitter-count-response.model';
-import { TwitterSearchResponse } from 'src/common/models/twitter/twitter-search-response.model';
+import { TwitterCountsResponse } from './models/twitter-count-response.model';
+import { TwitterSearchResponse } from './models/twitter-search-response.model';
 
 @Injectable()
 export class PostsService {

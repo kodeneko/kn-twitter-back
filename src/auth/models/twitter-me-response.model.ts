@@ -1,4 +1,4 @@
-import { TwitterError } from './twitter-error.model';
+import { TwitterError } from 'src/common/models/twitter/twitter-error.model';
 
 type TwitterMeResponseData = {
   id: string;
