@@ -47,11 +47,21 @@ export class UsersController {
     private readonly usersTwitterService: UsersTwitterService,
   ) {}
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createUserDto: CreateUserDto) {
-    const created = await this.userService.create(createUserDto);
-    return created;
+  @Public()
+  @Get('info')
+  async getMyInfo(@Cookie('jwt', UserFromTokenPipe) user: UserDocument) {
+    return this.userService.findOne(user._id.toString());
+  }
+
+  @Public()
+  @Get('twitter')
+  async getInfoTwitter(@Cookie('jwt', UserFromTokenPipe) user: UserDocument) {
+    return this.usersTwitterService.get(user._id.toString());
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
+    return this.userService.findOne(id);
   }
 
   @Get()
@@ -62,20 +72,11 @@ export class UsersController {
     });
   }
 
-  @Get(':id')
-  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
-    return this.userService.findOne(id);
-  }
-
-  @Public()
-  @Get('info')
-  async getMyInfo(@Cookie('jwt', UserFromTokenPipe) user: UserDocument) {
-    return this.userService.findOne(user._id.toString());
-  }
-
-  @Get('twitter')
-  async getInfoTwitter(@Cookie('jwt', UserFromTokenPipe) user: UserDocument) {
-    return this.usersTwitterService.get(user._id.toString());
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createUserDto: CreateUserDto) {
+    const created = await this.userService.create(createUserDto);
+    return created;
   }
 
   @Put()

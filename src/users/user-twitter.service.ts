@@ -45,7 +45,7 @@ export class UsersTwitterService {
         Authorization: `Bearer ${this.bearerToken}`,
       },
       params: {
-        fields,
+        fields: fields.join(','),
       },
     };
     try {
