@@ -28,6 +28,9 @@ export class User {
 
   @Prop({ type: TwitterInfoSchema })
   twitter: TwitterInfo;
+
+  @Prop({ required: true, unique: true, default: false })
+  admin: boolean;
 }
 
 export type UserDocument = User & Document & { _id: Types.ObjectId };

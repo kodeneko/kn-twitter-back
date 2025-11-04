@@ -2,10 +2,12 @@ import {
   BadRequestException,
   Controller,
   Get,
+  NotFoundException,
   Query,
   Render,
   Res,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Request, Response } from 'express';
@@ -16,7 +18,6 @@ import {
   generateCodeVerifier,
 } from 'src/utils/pkce.utils';
 import { UsersService } from 'src/users/users.service';
-import { Public } from 'src/common/decorators/public.decorator';
 import { TwitterService } from './twitter.service';
 import { JwtAuthService } from './jwt-auth.service';
 import { TwErrorRequestFilter } from 'src/common/filters/twitter/tw-error-request.filter';
@@ -26,6 +27,7 @@ import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.fil
 import { Cookie } from 'src/common/decorators/cookie.decorator';
 import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
 import type { UserDocument } from 'src/users/schemas/user.schema';
+import { JwtGuard } from './jwt.guard';
 
 const redis = new Redis();
 
@@ -38,6 +40,7 @@ const redis = new Redis();
 @Controller('auth')
 export class AuthController {
   private mode;
+  private frontUrl;
 
   constructor(
     private readonly configService: ConfigService,
@@ -46,32 +49,36 @@ export class AuthController {
     private readonly jwtAuthService: JwtAuthService,
   ) {
     this.mode = this.configService.get<string>('MODE') as string;
+    this.frontUrl = this.configService.get<string>('FRONT_URL') as string;
   }
 
-  @Public()
   @Get('login')
   @Render('login.hbs')
   twitter() {
     return;
   }
 
-  @Public()
+  @UseGuards(JwtGuard)
+  @Get('islogged')
+  isLogged(@Res() res: Response) {
+    return res.status(200).json({ msg: 'Está logeado' });
+  }
+
   @Get('twitter')
   async login(
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
     @Res() res: Response,
   ) {
-    if (user) res.redirect('/');
+    if (user) return res.redirect(`${this.frontUrl}/redirect-twitter`);
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
     const ticket = createTicket();
     await redis.setex(`twitterpkce:${ticket}`, 600, codeVerifier);
 
     const url = this.twitterService.createUrlLogin(ticket, codeChallenge);
-    res.redirect(url);
+    return res.redirect(url);
   }
 
-  @Public()
   @Get('callback')
   async callback(@Query() query: Record<string, string>, @Res() res: Response) {
     // Get tokens
@@ -104,6 +111,20 @@ export class AuthController {
       signed: !!isProd,
     };
 
-    res.cookie('jwt', tokenJwt, cookieOptions).redirect('/');
+    res
+      .cookie('jwt', tokenJwt, cookieOptions)
+      .redirect(`${this.frontUrl}/redirect-twitter`);
+  }
+
+  @Get('logout')
+  logout(
+    @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
+    @Res() res: Response,
+  ) {
+    if (!user) throw new NotFoundException('There user was not logged');
+    res
+      .clearCookie('jwt', { path: '/' })
+      .status(200)
+      .json({ msg: 'Deleted info auth' });
   }
 }

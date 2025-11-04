@@ -16,7 +16,7 @@ export class UserFromTokenPipe implements PipeTransform {
     try {
       const jwtPayload: JwtTokenPayload =
         this.jwtAuthService.checkTokenJWT(jwt);
-      user = await this.usersService.findOne(jwtPayload.sub);
+      user = await this.usersService.findOneComplete(jwtPayload.sub);
     } catch {
       user = undefined;
     }

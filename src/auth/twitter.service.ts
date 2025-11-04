@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import qs from 'qs';
-import { TwitterTokenResponse } from './models/twitter-token-response.model';
 import { ConfigService } from '@nestjs/config';
 import type { AxiosError, AxiosResponse } from 'axios';
 import axios from 'axios';
-import { TwitterMeResponse } from './models/twitter-me-response.mdoel';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
 import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
+import {
+  TwitterMeResponse,
+  TwitterMeResponseData,
+} from './models/twitter-me-response.model';
+import { TwitterTokenResponse } from './models/twitter-token-response.model';
 
 @Injectable()
 export class TwitterService {
@@ -98,13 +101,13 @@ export class TwitterService {
     accesToken: string,
     refreshToken: string,
   ): Promise<UserDocument> {
-    let userInfo: TwitterMeResponse | undefined = undefined;
+    let userInfo: TwitterMeResponseData | undefined = undefined;
     try {
       const userInfoResult: AxiosResponse<TwitterMeResponse> = await axios.get(
         this.urlInfo,
         { headers: { Authorization: `Bearer ${accesToken}` } },
       );
-      userInfo = userInfoResult.data;
+      userInfo = userInfoResult.data.data as TwitterMeResponseData;
     } catch (err) {
       const axiosErr = err as AxiosError;
       throw !axiosErr.response || axiosErr.response.status > 500
@@ -112,15 +115,15 @@ export class TwitterService {
         : new TwErrorRequestException();
     }
     let user: UserDocument;
-    const resFindUser = await this.userService.find({
-      ['twitter.id']: userInfo.data.id,
+    const resFindUser = await this.userService.findComplete({
+      ['twitter.id']: userInfo.id,
     });
 
     if (resFindUser?.length === 0) {
       user = await this.userService.create({
-        username: userInfo.data.username,
+        username: userInfo.username,
         twitter: {
-          id: userInfo.data.id,
+          id: userInfo.id,
           token: accesToken,
           refreshToken: refreshToken,
         },

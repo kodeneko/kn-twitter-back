@@ -5,6 +5,8 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DbNotFoundException } from 'src/common/exceptions/db/db-not-found.exception';
+import { userDocuToUserSkipParser } from './utils/user.parse';
+import { UserSkipRes } from './model/user-skip-res.model';
 
 @Injectable()
 export class UsersService {
@@ -22,11 +24,26 @@ export class UsersService {
   }: {
     skip?: number;
     limit?: number;
-  }): Promise<UserDocument[]> {
-    return this.userModel.find().skip(skip).limit(limit).exec();
+  }): Promise<UserSkipRes[]> {
+    return this.userModel
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .exec()
+      .then((list) => list.map((e) => userDocuToUserSkipParser(e)));
   }
 
-  async findOne(id: string): Promise<UserDocument> {
+  async findOne(id: string): Promise<UserSkipRes> {
+    return this.userModel
+      .findById(id)
+      .exec()
+      .then((doc) => {
+        if (doc === null) throw new DbNotFoundException();
+        return userDocuToUserSkipParser(doc);
+      });
+  }
+
+  async findOneComplete(id: string): Promise<UserDocument> {
     return this.userModel
       .findById(id)
       .exec()
@@ -36,7 +53,17 @@ export class UsersService {
       });
   }
 
-  async find(opts: Record<string, string>): Promise<UserDocument[]> {
+  async find(opts: Record<string, string>): Promise<UserSkipRes[]> {
+    return this.userModel
+      .find(opts)
+      .exec()
+      .then((list) => {
+        if (list.length === 0) throw new DbNotFoundException();
+        return list.map((e) => userDocuToUserSkipParser(e));
+      });
+  }
+
+  async findComplete(opts: Record<string, string>): Promise<UserDocument[]> {
     return this.userModel
       .find(opts)
       .exec()
@@ -46,24 +73,24 @@ export class UsersService {
       });
   }
 
-  async update(updateUserDto: UpdateUserDto): Promise<UserDocument> {
+  async update(updateUserDto: UpdateUserDto): Promise<UserSkipRes> {
     const { _id, ...rest } = updateUserDto;
     return this.userModel
       .findByIdAndUpdate(_id, rest, { new: true })
       .exec()
       .then((doc) => {
         if (doc === null) throw new DbNotFoundException();
-        return doc;
+        return userDocuToUserSkipParser(doc);
       });
   }
 
-  async delete(id: string): Promise<UserDocument> {
+  async delete(id: string): Promise<UserSkipRes> {
     return this.userModel
       .findByIdAndDelete(id)
       .exec()
       .then((doc) => {
         if (doc === null) throw new DbNotFoundException();
-        return doc;
+        return userDocuToUserSkipParser(doc);
       });
   }
 }

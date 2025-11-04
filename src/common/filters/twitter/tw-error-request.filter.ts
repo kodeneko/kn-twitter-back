@@ -10,6 +10,7 @@ export class TwErrorRequestFilter implements ExceptionFilter {
     const req = ctx.getRequest<Request>();
 
     res.status(400).json({
+      code: 400,
       path: req.url,
       timestamp: new Date().toISOString(),
       nest: 'TwErrorRequestFilter',

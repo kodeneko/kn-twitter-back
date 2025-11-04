@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { TwitterTrendingsRes } from './model/twitter-trendings-res.model';
 import { ConfigService } from '@nestjs/config';
 import { TwErrorServerException } from 'src/common/exceptions/twitter/tw-error-server.exception';
 import { TwErrorRequestException } from 'src/common/exceptions/twitter/tw-error-request.exception';
+import { TwErrorAccessException } from 'src/common/exceptions/twitter/tw-error-access.exception';
+import { TwErrorLimitsException } from 'src/common/exceptions/twitter/tw-error-limits.exception';
 
 @Injectable()
-export class TrendingService {
+export class TrendingsService {
   private bearerToken: string;
 
   constructor(private readonly configService: ConfigService) {
@@ -25,9 +27,11 @@ export class TrendingService {
       })
       .catch((err: Error) => {
         const axiosErr = err as AxiosError;
-        throw !axiosErr.response || axiosErr.response.status > 500
-          ? new TwErrorServerException()
-          : new TwErrorRequestException();
+        const { status } = axiosErr.response as AxiosResponse;
+        if (status === 403) throw new TwErrorAccessException();
+        else if (status === 429) throw new TwErrorLimitsException();
+        else if (status >= 500) throw new TwErrorServerException();
+        else throw new TwErrorRequestException(status + '');
       });
   }
 }

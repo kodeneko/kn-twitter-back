@@ -1,8 +1,6 @@
 import { Controller, Get, Query, UseFilters, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { getDateBeforeISO } from 'src/utils/time-count.utils';
-import { TwitterCountsResponse } from 'src/auth/models/twitter-count-response.model';
-import { TwitterSearchResponse } from 'src/auth/models/twitter-search-response.model';
 import { DaysRangePipe } from './pipes/days-range.pipe';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { Cookie } from 'src/common/decorators/cookie.decorator';
@@ -12,10 +10,16 @@ import { TwErrorServerFilter } from 'src/common/filters/twitter/tw-error-server.
 import { UserFromTokenPipe } from 'src/common/pipes/user-from-token.pipe';
 import { DbErrorServerFilter } from 'src/common/filters/db/db-error-server.filter';
 import { DbErrorRequestFilter } from 'src/common/filters/db/db-error-request.filter';
+import { TwErrorLimitsFilter } from 'src/common/filters/twitter/tw-limits.filter';
+import { TwitterCountsResponse } from './models/twitter-count-response.model';
+import { TwitterSearchResponse } from './models/twitter-search-response.model';
+import { TwErrorAccessFilter } from 'src/common/filters/twitter/tw-error-access.filter';
 
 @UseFilters(
+  TwErrorAccessFilter,
   TwErrorRequestFilter,
   TwErrorServerFilter,
+  TwErrorLimitsFilter,
   DbErrorServerFilter,
   DbErrorRequestFilter,
   DbErrorRequestFilter,
@@ -25,7 +29,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get('count')
-  countThreeDays(
+  count(
     @Query('query') query: string,
     @Query('days', DaysRangePipe) days: number,
   ): Promise<TwitterCountsResponse> {
@@ -34,8 +38,8 @@ export class PostsController {
   }
 
   @UseGuards(JwtGuard)
-  @Get()
-  postsOneDay(
+  @Get('list')
+  list(
     @Query('days', DaysRangePipe) days: number,
     @Cookie('jwt', UserFromTokenPipe) user: UserDocument,
   ): Promise<TwitterSearchResponse> {
